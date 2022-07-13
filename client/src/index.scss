@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0b0b0b] font-body text-white;
+  }
+}
+@layer components {
+  .page-container {
+    max-width: 1280px;
+    @apply mx-auto;
+  }
+  .movie-list .swiper-slide {
+    width: 300px;
+    height: auto;
+  }
+  .banner .swiper {
+    height: 100%;
+  }
+}
+
+.register {
+  background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5) 1%,
+      rgba(0, 0, 0, 0.75) 100%
+    ),
+    url("https://assets.nflxext.com/ffe/siteui/vlv3/c732cb00-be61-4d64-b8c3-99f022e7a123/8581641b-b5eb-4e9c-bbf8-6be15a81f347/VN-vi-20220620-popsignuptwoweeks-perspective_alpha_website_small.jpg");
+  background-size: cover;
+}
+.login {
+  background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0.75) 100%
+    ),
+    url("https://assets.nflxext.com/ffe/siteui/vlv3/c732cb00-be61-4d64-b8c3-99f022e7a123/8581641b-b5eb-4e9c-bbf8-6be15a81f347/VN-vi-20220620-popsignuptwoweeks-perspective_alpha_website_small.jpg");
+  background-size: cover;
+}
+.input-signUp {
+  height: 40px;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  padding-left: 10px;
+  margin-bottom: 8px;
+  &::placeholder {
+    color: lightgrey;
+  }
+}
+.profile {
+  .options {
+    display: none;
+  }
+  span {
+    cursor: pointer;
+    padding: 8px;
+  }
+  &:hover {
+    .options {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      cursor: pointer;
+    }
+  }
+}

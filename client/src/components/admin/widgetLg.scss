@@ -1,0 +1,20 @@
+.movieTitle {
+  font-size: 30px;
+}
+.widgetButton {
+  padding: 5px 7px;
+  border-radius: 10px;
+  border: none;
+}
+.widgetButton.Approved {
+  background-color: #e5faf2;
+  color: #3bb077;
+}
+.widgetButton.Declined {
+  background-color: #fff0f1;
+  color: #d95087;
+}
+.widgetButton.Pending {
+  background-color: #ebf1fe;
+  color: #2a7ade;
+}
