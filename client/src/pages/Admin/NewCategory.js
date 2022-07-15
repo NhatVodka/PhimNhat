@@ -26,7 +26,7 @@ const NewCategory = () => {
   const handleCreate = (e) => {
     e.preventDefault();
     createCategory(category, dispatch);
-    navigate("/category/");
+    navigate("/categoryAdmin/");
   };
   // console.log(
   //   movies.filter((item) => {

@@ -45,11 +45,9 @@ router.delete("/:id", verify, async (req, res) => {
 router.get("/:id", verify, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    // console.log(user._doc);
-    // const { password, ...info } = user._doc;
+    const { password, ...info } = user._doc;
 
-    // res.status(200).json(info);
-    res.status(200).json(user._doc);
+    res.status(200).json(info);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -72,9 +70,9 @@ router.get("/", verify, async (req, res) => {
 });
 // GET USER STATS
 
-router.get("/stats", async (req, res) => {
+router.get("/stats", verify, async (req, res) => {
   const today = new Date();
-  const lastYear = today.setFullYear(today.setFullYear() - 1);
+  const lastYear = today.setFullYear(today.setFullYear());
 
   try {
     const data = await User.aggregate([

@@ -11,11 +11,9 @@ import { auth } from "../../Firebase";
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   isFetching: false,
-  error: false,
+  error: "",
 };
-
 export const AuthContext = createContext(INITIAL_STATE);
-
 export const AuthContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
@@ -45,7 +43,6 @@ export const AuthContextProvider = ({ children }) => {
   const signInWithFacebook = () => {
     signInWithPopup(auth, facebook)
       .then((result) => {
-        console.log(result.user);
         const { accessToken, displayName, photoURL, email } = result.user;
         const userFb = {
           accessToken: accessToken,
@@ -63,11 +60,10 @@ export const AuthContextProvider = ({ children }) => {
         console.log(error);
       });
   };
-
+  // console.log(state.error);
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
-  }, [state.user]);
-
+  }, [state.user, state.isFetching]);
   return (
     <AuthContext.Provider
       value={{

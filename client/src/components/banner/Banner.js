@@ -8,12 +8,7 @@ const Banner = () => {
   useEffect(() => {
     const getMovies = async () => {
       try {
-        const res = await axios.get(`movies/`, {
-          headers: {
-            token:
-              "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjJiOGUzMzQ1ZTY3YzQ4YTU4MjM5MiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NjY0MDI5NSwiZXhwIjoxNjU3MDcyMjk1fQ.ngcJ1y_z_Ws8ysh6jXMqrKkP-hxCCZRuJ5fLL5veNBs",
-          },
-        });
+        const res = await axios.get(`movies/`);
         setMovies(res.data);
       } catch (error) {
         console.log(error);

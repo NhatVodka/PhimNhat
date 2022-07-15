@@ -44,9 +44,9 @@ const NewMovie = () => {
   const handleCreate = (e) => {
     e.preventDefault();
     createMovie(movie, dispatch);
-    navigate("/movies");
+    navigate("/moviesAdmin");
   };
-  console.log(movie);
+  // console.log(movie);
   // Firebase configs
   const storage = getStorage();
   const metadata = {

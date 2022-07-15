@@ -4,6 +4,7 @@ import useSWR from "swr";
 import MovieSimilar from "../../components/similarMovie/MovieSimilar";
 import { fetcher } from "../../config";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
+
 // import { Swiper, SwiperSlide } from "swiper/react";
 // import MovieCard from "../../components/MovieCard/MovieCard";
 // import axios from "axios";
@@ -30,7 +31,7 @@ const MovieDetailPage = () => {
         <img
           src={`${poster_path}`}
           alt=""
-          className="w-full h-full object-cover rounded-xl"
+          className="w-full object-cover h-full rounded-xl"
         />
       </div>{" "}
       <Link to={`/watch/${id}`}>
@@ -128,7 +129,11 @@ function MovieTrailer() {
                 <iframe
                   width="885"
                   height="498"
-                  src={`https://www.youtube.com/embed/${item}`}
+                  src={
+                    item.includes("/watch?v=")
+                      ? item.replace("/watch?v=", "/embed/")
+                      : item
+                  }
                   title="YOU'RE TOO LITTLE BOY! We Invaded D1 School Full of TRASH TALKERS!! 5v5 ECS Streetball"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

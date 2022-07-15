@@ -6,12 +6,12 @@ const WidGetSmall = () => {
 
   const getNewUSer = async () => {
     try {
-      const res = await axios.get("/users?new=true", {
+      const res = await axios.get(`/users?new=true`, {
         headers: {
-          token: "nhat" + JSON.parse(localStorage.getItem("user")).accessToken,
+          token:
+            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjJiOGVlMzQ1ZTY3YzQ4YTU4MjM5NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NzgxNDM1MywiZXhwIjoxNjU4MjQ2MzUzfQ.QTMF5KvNwgurXjqXPA_7b_Shvc69njLLUfGx_zvM0_s",
         },
       });
-      console.log(res);
       setNewUsers(res.data);
     } catch (error) {
       console.log(error);
@@ -20,8 +20,9 @@ const WidGetSmall = () => {
   useEffect(() => {
     getNewUSer();
   }, []);
+
   return (
-    <div className="widgetSm flex-[1] shadow-lg  p-5 mr-5">
+    <div className="widgetSm flex-[1] shadow-lg  p-5 mr-5 text-black">
       <span className="text-3xl font-semibold">New join members</span>
       <ul className="m-0 p-0 ">
         {newUsers.map((user, index) => (
@@ -38,7 +39,7 @@ const WidGetSmall = () => {
               alt="User"
             />
             <div className="flex flex-col">
-              <span className="font-semibold ">{user.username}</span>
+              <span className="font-semibold">{user.username}</span>
             </div>
             <button className="flex items-center rounded-md py-2 px-3 bg-[#eeeef7] text-gray-500 cursor-pointer">
               <VisibilityIcon className="text-base mr-1" />

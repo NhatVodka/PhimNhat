@@ -30,13 +30,13 @@ const NewUser = () => {
   const handleCreate = (e) => {
     e.preventDefault();
     createUser(user, dispatch);
-    navigate("/users/");
+    navigate("/usersAdmin/");
   };
   const storage = getStorage();
   const metadata = {
     contentType: "image/jpeg",
   };
-
+  console.log(user);
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
@@ -108,23 +108,29 @@ const NewUser = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="w-[400px] flex flex-col mt-4 mr-5 ">
+            {/* <div className="w-[400px] flex flex-col mt-4 mr-5 ">
               <label className="mb-3 text-base font-semibold text-gray-900">
                 IsAdmin
               </label>
               <select
-                className="h-5 rounded"
+                className="h-9 border-2 border-gray-400 rounded text-black"
                 name="isAdmin"
                 onChange={handleChange}
               >
-                <option value="true">Yes</option>
-                <option value="false">No</option>
+                <option className="p-4 text-black" value={Boolean(true)}>
+                  Yes
+                </option>
+                <option className="p-4 text-black" value={false}>
+                  No
+                </option>
               </select>
-            </div>
+            </div> */}
             <div className="w-[400px] flex flex-col mt-3 mr-5">
-              <label className=" text-base font-semibold">Profile Pic</label>
+              <label className=" text-base font-semibold text-black">
+                Profile Pic
+              </label>
               <input
-                className="h-10 outline-none  rounded"
+                className="h-10 outline-none  rounded text-black"
                 type="file"
                 name="profilePic"
                 onChange={(e) => setProfilePic(e.target.files[0])}

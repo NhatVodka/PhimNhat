@@ -22,9 +22,6 @@ const Navbar = () => {
           <div className="item">
             <img className="w-7 h-7 rounded-md" src={user.profilePic} alt="" />
           </div>
-          <div className="item">
-            <SettingsIcon className="icon" />
-          </div>
         </div>
       </div>
     </div>

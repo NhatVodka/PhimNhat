@@ -27,13 +27,13 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(401).json("User not exist");
+    !user && res.status(401).json("This user does not exist!!");
 
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     originalPassword !== req.body.password &&
-      res.status(401).json("Wrong password or username!");
+      res.status(401).json("Incorrect password. Please try again.");
 
     const accessToken = jwt.sign(
       { id: user.id, isAdmin: user.isAdmin },

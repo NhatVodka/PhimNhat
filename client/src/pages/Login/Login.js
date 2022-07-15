@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { login } from "../../contexts/authContext/apiCalls";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import { useNavigate } from "react-router";
@@ -22,10 +22,12 @@ const Login = () => {
     login({ email, password }, dispatch);
     if (user) {
       navigate("/");
-    } else {
-      console.log(error);
     }
+    // else if (error && error !== "") {
+    //   alert(error);
+    // }
   };
+
   return (
     <div className="login w-full h-screen relative">
       <div className="top">
@@ -39,7 +41,12 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="px-7 py-7 rounded-md flex flex-col gap-2 "
           >
-            <h1 className="text-3xl font-bold mb-7">Sign In</h1>
+            {error && (
+              <div className="text-yellow-500 text-sm z-[9999] absolute left-15 top-[150px] mt-1 ">
+                {error}
+              </div>
+            )}
+            <h1 className="text-3xl font-bold mb-8">Sign In</h1>
             <input
               className="input-signUp"
               type="email"
@@ -53,7 +60,7 @@ const Login = () => {
               })}
             />
             {errors?.email?.type === "required" && (
-              <div className="text-yellow-500 text-sm z-[9999] absolute left-15 top-[220px] mt-2 ">
+              <div className="text-yellow-500 text-sm z-[9999] absolute left-15 top-[220px] mt-1 ">
                 Please enter a valid email or phone number.
               </div>
             )}

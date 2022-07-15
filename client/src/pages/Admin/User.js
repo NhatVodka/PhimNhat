@@ -35,7 +35,6 @@ const User = () => {
           token: "nhat " + JSON.parse(localStorage.getItem("user")).accessToken,
         },
       });
-      console.log(res);
       setUser(res.data);
     } catch (error) {
       console.log(error);
@@ -43,9 +42,8 @@ const User = () => {
   };
   useEffect(() => {
     getUser();
-  }, []);
-  // console.log(user);
-  const { username, email, password, _id, isAdmin } = user;
+  }, [userId]);
+  const { username, email, _id, isAdmin } = user;
   const handleChange = (e) => {
     const value = e.target.value;
     setUser({
@@ -60,7 +58,7 @@ const User = () => {
     e.preventDefault();
     upload([{ file: profilePic, label: "profilePic" }]);
   };
-
+  console.log(user);
   // Firebase configs
   const storage = getStorage();
   const metadata = {
@@ -102,11 +100,6 @@ const User = () => {
         <div className="flex-[4] p-5">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">Edit User</h1>
-            {/* <Link to="/newuser">
-              <button className="w-20 outline-none p-[5px] rounded-md bg-green-400 cursor-pointer text-white text-lg font-semibold">
-                Create
-              </button>
-            </Link> */}
           </div>
           <div className="flex mt-5">
             <div className="flex-[1] p-5 shadow-lg h-[500px]">
@@ -116,7 +109,7 @@ const User = () => {
                   src={user.profilePic}
                   alt=""
                 />
-                <div className="flex flex-col ml-3">
+                <div className="flex flex-col ml-3 text-black">
                   <span className="font-semibold">{username}</span>
                   <span className="font-semibold">ID: {_id}</span>
                   <span className="font-light">{`${
@@ -152,7 +145,7 @@ const User = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-[2] p-5 shadow-lg ml-5">
+            <div className="flex-[2] p-5 shadow-lg ml-5 text-black">
               <span className="text-2xl font-bold">Edit</span>
               <form className="flex justify-between mt-5">
                 <div>
@@ -176,7 +169,7 @@ const User = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  {/* <div className="flex flex-col mt-3">
+                  <div className="flex flex-col mt-3">
                     <label className="mb-1 text-base ">Password</label>
                     <input
                       type="text"
@@ -185,12 +178,12 @@ const User = () => {
                       name="password"
                       onChange={handleChange}
                     />
-                  </div> */}
+                  </div>
                   {/* <div className="flex flex-col mt-3">
                     <label className="mb-1 text-base ">IsAdmin</label>
                     <input
                       type="text"
-                      placeholder="True..."
+                      placeholder="True or False"
                       className="border-b-2 outline-none w-[250px]"
                       name="isAdmin"
                       onChange={handleChange}

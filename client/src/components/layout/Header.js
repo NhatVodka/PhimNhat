@@ -64,7 +64,10 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <img
             className="w-8 h-8 rounded-md object-cover"
-            src={user.profilePic}
+            src={
+              user.profilePic ||
+              "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+            }
             alt="Profile of user"
           />
           <h2>{user.username}</h2>

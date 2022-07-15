@@ -18,8 +18,6 @@ const Register = () => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      setPassword(data.password);
-      setUsername(data.username);
       await axios.post("auth/register", { email, username, password });
       navigate("/login");
     } catch (error) {
@@ -99,6 +97,7 @@ const Register = () => {
               {...register("username", {
                 required: true,
                 maxLength: 10,
+                onChange: (e) => setUsername(e.target.value),
               })}
             />
             {errors?.username?.type === "required" && (
@@ -118,8 +117,9 @@ const Register = () => {
               placeholder="password"
               {...register("password", {
                 required: true,
-                minLength: 5,
+                minLength: 4,
                 maxLength: 20,
+                onChange: (e) => setPassword(e.target.value),
               })}
             />
             {errors?.password?.type === "required" && (
