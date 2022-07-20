@@ -23,9 +23,6 @@ const Login = () => {
     if (user) {
       navigate("/");
     }
-    // else if (error && error !== "") {
-    //   alert(error);
-    // }
   };
 
   return (

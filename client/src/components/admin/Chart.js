@@ -9,7 +9,7 @@ import {
 } from "recharts";
 const Chart = ({ title, data, dataKey, grid }) => {
   return (
-    <div className="shadow-lg  m-5 p-5 text-xl font-bold">
+    <div className="shadow-lg  m-5 p-5 text-xl font-bold text-black">
       <h3 className="mb-5">{title}</h3>
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <LineChart data={data}>

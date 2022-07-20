@@ -6,11 +6,11 @@ const MovieWidget = ({ pic, title, genre, date, status }) => {
   return (
     <>
       <tr>
-        <td className="flex items-center font-semibold">
-          <img className="w-10 h-10 mr-3  object-cover" src={pic} alt="" />
+        <td className="font-semibold">
+          <img className="w-10 h-10 mr-3 object-cover" src={pic} alt="" />
         </td>
         <td>
-          <span className="text-xl font-semibold">{title}</span>
+          <span className="text-lg font-semibold mb-2">{title}</span>
         </td>
         <td>{genre}</td>
         <td>{date}</td>

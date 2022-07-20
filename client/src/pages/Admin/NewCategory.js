@@ -20,7 +20,13 @@ const NewCategory = () => {
     setCategory({ ...category, [e.target.name]: value });
   };
   const handleSelect = (e) => {
-    let value = Array.from(e.target.selectedOptions, (option) => option.value);
+    const results = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    let value = movies.filter((item) => {
+      return results.includes(item._id);
+    });
     setCategory({ ...category, [e.target.name]: value });
   };
   const handleCreate = (e) => {
@@ -28,11 +34,6 @@ const NewCategory = () => {
     createCategory(category, dispatch);
     navigate("/categoryAdmin/");
   };
-  // console.log(
-  //   movies.filter((item) => {
-  //     return category?.results.includes(item._id);
-  //   })
-  // );
 
   return (
     <div className="flex bg-white">
@@ -41,7 +42,7 @@ const NewCategory = () => {
         <Navbar />
         <div className="p-5">
           <h1 className="text-2xl font-bold">New Category</h1>
-          <form className="flex flex-wrap gap-10">
+          <form className="flex flex-wrap gap-10 text-black">
             <div className="w-[400px] flex flex-col mt-3 mr-5 gap-10">
               <div className="w-[400px] flex flex-col mt-3 mr-5">
                 <label className="mb-3 text-xl font-semibold text-black">
@@ -52,18 +53,6 @@ const NewCategory = () => {
                   type="text"
                   placeholder="Trending"
                   name="categoryName"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="w-[400px] flex flex-col mt-3 mr-5">
-                <label className="mb-3 text-xl font-semibold text-black">
-                  Page
-                </label>
-                <input
-                  className="h-5 p-4 border-2 border-gray-400 rounded"
-                  type="text"
-                  placeholder="1"
-                  name="page"
                   onChange={handleChange}
                 />
               </div>

@@ -53,12 +53,22 @@ const MovieList = () => {
     {
       field: "release_date",
       headerName: "Year",
-      width: 160,
+      width: 100,
+    },
+    {
+      field: "country",
+      headerName: "Country",
+      width: 100,
     },
     {
       field: "vote_average",
       headerName: "Rating",
-      width: 160,
+      width: 120,
+    },
+    {
+      field: "time",
+      headerName: "Time",
+      width: 100,
     },
     {
       field: "action",

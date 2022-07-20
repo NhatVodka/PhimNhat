@@ -40,11 +40,6 @@ const CategoryList = () => {
       width: 200,
     },
     {
-      field: "page",
-      headerName: "Page",
-      width: 120,
-    },
-    {
       field: "action",
       headerName: "Action",
       width: 150,

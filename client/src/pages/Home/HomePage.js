@@ -1,37 +1,41 @@
-import React, { Fragment } from "react";
+import axios from "axios";
+import React, { Fragment, useEffect, useState } from "react";
 import Banner from "../../components/banner/Banner";
 import Header from "../../components/layout/Header";
 import MovieList from "../../components/MovieList/MovieList";
 
 const HomePage = () => {
+  const [category, setCategory] = useState([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getCategory = async () => {
+    try {
+      const res = await axios.get(`/category`);
+      setCategory(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getCategory();
+  }, []);
+  // console.log(category);
   return (
     <Fragment>
       <Header></Header>
       <Banner></Banner>
-      <section className="movies-layout page-container pb-20">
-        <h2 className="mb-5 text-3xl capitalize text-white font-bold">
-          Now Playing
-        </h2>
-        <MovieList categoryName="Now Playing"></MovieList>
-      </section>
-      <section className="movies-layout page-container pb-20">
-        <h2 className="mb-5 text-3xl capitalize text-white font-bold">
-          Popular
-        </h2>
-        <MovieList categoryName="Popular"></MovieList>
-      </section>
-      <section className="movies-layout page-container pb-20">
-        <h2 className="mb-5 text-3xl capitalize text-white font-bold">
-          Top rated
-        </h2>
-        <MovieList categoryName="Top Rated"></MovieList>
-      </section>
-      <section className="movies-layout page-container pb-20">
-        <h2 className="mb-5 text-3xl capitalize text-white font-bold">
-          Upcoming
-        </h2>
-        <MovieList categoryName="Upcoming"></MovieList>
-      </section>
+      {category &&
+        category.length > 0 &&
+        category.map((item) => (
+          <section
+            key={item._id}
+            className="movies-layout page-container pb-20"
+          >
+            <h2 className="mb-5 text-3xl capitalize text-white font-bold">
+              {item.categoryName}
+            </h2>
+            <MovieList categoryName={item.categoryName}></MovieList>
+          </section>
+        ))}
     </Fragment>
   );
 };

@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../../components/admin/Navbar";
 import Sidebar from "../../components/admin/Sidebar";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import PasswordIcon from "@mui/icons-material/Password";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import MailIcon from "@mui/icons-material/Mail";
-import PublishIcon from "@mui/icons-material/Publish";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import { Link, useParams } from "react-router-dom";
-import storage from "../../Firebase";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   getStorage,
   ref,
@@ -21,12 +19,11 @@ import { UserContext } from "../../contexts/userContext/UserContext";
 import { updateUser } from "../../contexts/userContext/apiCalls";
 
 const User = () => {
-  const dispatch = useContext(UserContext);
-
+  const navigate = useNavigate();
+  const { dispatch } = useContext(UserContext);
   const { userId } = useParams();
   const [user, setUser] = useState([]);
   const [profilePic, setProfilePic] = useState(user.profilePic);
-  const [uploaded, setUploaded] = useState(0);
 
   const getUser = async () => {
     try {
@@ -42,6 +39,7 @@ const User = () => {
   };
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   const { username, email, _id, isAdmin } = user;
   const handleChange = (e) => {
@@ -51,14 +49,15 @@ const User = () => {
       [e.target.name]: value,
     });
   };
-  const handleUpdateUser = (id) => {
+  const handleUpdateUser = (e, id) => {
+    e.preventDefault();
     updateUser(id, user, dispatch);
+    navigate("/usersAdmin");
   };
   const handleUpload = (e) => {
     e.preventDefault();
     upload([{ file: profilePic, label: "profilePic" }]);
   };
-  console.log(user);
   // Firebase configs
   const storage = getStorage();
   const metadata = {
@@ -86,7 +85,6 @@ const User = () => {
             setUser((prev) => {
               return { ...prev, [item.label]: url };
             });
-            setUploaded((prev) => prev + 1);
           });
         }
       );
@@ -133,10 +131,7 @@ const User = () => {
                   <MailIcon className=" text-base " />
                   <span className="ml-3 text-black">Email: {email}</span>
                 </div>
-                {/* <div className="flex items-center my-5 mx-0 text-gray-400">
-                  <PasswordIcon className=" text-base " />
-                  <span className="ml-3 text-black">Password: {password}</span>
-                </div> */}
+
                 <div className="flex items-center my-5 mx-0 text-gray-400">
                   <PermIdentityIcon className=" text-base " />
                   <span className="ml-3 text-black">
@@ -179,16 +174,6 @@ const User = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  {/* <div className="flex flex-col mt-3">
-                    <label className="mb-1 text-base ">IsAdmin</label>
-                    <input
-                      type="text"
-                      placeholder="True or False"
-                      className="border-b-2 outline-none w-[250px]"
-                      name="isAdmin"
-                      onChange={handleChange}
-                    />
-                  </div> */}
                   <div className="flex flex-col mt-3">
                     <label className="mb-1 text-base ">Profile Pic</label>
                     <input
@@ -200,32 +185,27 @@ const User = () => {
                   </div>
                 </div>
                 <div className="flex flex-col justify-between">
-                  <div className="flex items-center">
+                  <div>
                     <img
                       className="w-[100px] h-[100px] rounded-lg object-cover mr-5"
                       src={user.profilePic}
                       alt=""
                     />
-                    <label htmlFor="file">
-                      <PublishIcon className="cursor-pointer" />
-                    </label>
-                    <input style={{ display: "none" }} type="file" id="file" />
                   </div>
-                  {uploaded === 1 ? (
+                  <div>
                     <button
-                      className="outlinie-none p-1 cursor-pointer rounded-md bg-blue-600 text-white "
-                      onClick={() => handleUpdateUser(userId)}
+                      className="outlinie-none p-1 cursor-pointer rounded-md bg-blue-600 text-white mr-3 "
+                      onClick={(e) => handleUpdateUser(e, userId)}
                     >
                       Update
                     </button>
-                  ) : (
                     <button
                       className="outlinie-none p-1 cursor-pointer rounded-md bg-blue-600 text-white "
-                      onClick={handleUpload}
+                      onClick={(e) => handleUpload(e)}
                     >
                       Upload
                     </button>
-                  )}
+                  </div>
                 </div>
               </form>
             </div>

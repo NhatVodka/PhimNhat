@@ -4,26 +4,26 @@ import MovieCard from "../MovieCard/MovieCard";
 
 import axios from "axios";
 const MovieList = ({ categoryName }) => {
-  const [category, setCategory] = useState([]);
+  const [movieCategory, setMovieCategory] = useState([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getCategory = async () => {
+  const getMovieCategory = async () => {
     try {
       const res = await axios.get(
         `category${categoryName ? `?categoryName=${categoryName}` : ""}`
       );
-      setCategory(res.data[0].results);
+      setMovieCategory(res.data[0].results);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getCategory();
+    getMovieCategory();
   }, []);
   return (
     <div className="movie-list">
       <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
-        {category.length > 0 &&
-          category.map((item, index) => (
+        {movieCategory.length > 0 &&
+          movieCategory.map((item, index) => (
             <SwiperSlide key={index}>
               <MovieCard item={item}></MovieCard>
             </SwiperSlide>

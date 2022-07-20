@@ -41,8 +41,33 @@ router.delete("/:id", verify, async (req, res) => {
     res.status(403).json("You can delete only your account");
   }
 });
+// GET USER STATS
+
+router.get("/stats", async (req, res) => {
+  const today = new Date();
+  const lastYear = today.setFullYear(today.setFullYear() - 1);
+
+  try {
+    const data = await User.aggregate([
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 // GET
-router.get("/:id", verify, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...info } = user._doc;
@@ -66,31 +91,6 @@ router.get("/", verify, async (req, res) => {
     }
   } else {
     res.status(403).json("You are not allow to see all users");
-  }
-});
-// GET USER STATS
-
-router.get("/stats", verify, async (req, res) => {
-  const today = new Date();
-  const lastYear = today.setFullYear(today.setFullYear());
-
-  try {
-    const data = await User.aggregate([
-      {
-        $project: {
-          month: { $month: "$createdAt" },
-        },
-      },
-      {
-        $group: {
-          _id: "$month",
-          total: { $sum: 1 },
-        },
-      },
-    ]);
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(500).json(error);
   }
 });
 

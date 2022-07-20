@@ -50,16 +50,7 @@ const UserList = () => {
       },
     },
     { field: "email", headerName: "Email", width: 200 },
-    {
-      field: "password",
-      headerName: "Password",
-      width: 200,
-    },
-    {
-      field: "isAdmin",
-      headerName: "IsAdmin",
-      width: 150,
-    },
+
     {
       field: "action",
       headerName: "Action",

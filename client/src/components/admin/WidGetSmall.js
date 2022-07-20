@@ -3,13 +3,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 const WidGetSmall = () => {
   const [newUsers, setNewUsers] = useState([]);
-
   const getNewUSer = async () => {
     try {
       const res = await axios.get(`/users?new=true`, {
         headers: {
           token:
-            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjJiOGVlMzQ1ZTY3YzQ4YTU4MjM5NCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NzgxNDM1MywiZXhwIjoxNjU4MjQ2MzUzfQ.QTMF5KvNwgurXjqXPA_7b_Shvc69njLLUfGx_zvM0_s",
+            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjJiOGY0MzQ1ZTY3YzQ4YTU4MjM5NiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1ODI5Njc2MCwiZXhwIjoxNjU4NzI4NzYwfQ.Tnp1gOkhVWN5M8JZgEKudZwVtgzT0X5x5d4J4rslzuY",
         },
       });
       setNewUsers(res.data);

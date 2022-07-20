@@ -7,6 +7,7 @@ import { AuthContextProvider } from "./contexts/authContext/AuthContext";
 import { MovieContextProvider } from "./contexts/movieContext/MovieContext";
 import { CategoryContextProvider } from "./contexts/categoryContext/CategoryContext";
 import { UserContextProvider } from "./contexts/userContext/UserContext";
+import { CommentContextProvider } from "./contexts/commentContext/CommentContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,9 @@ root.render(
       <MovieContextProvider>
         <CategoryContextProvider>
           <UserContextProvider>
-            <App />
+            <CommentContextProvider>
+              <App />
+            </CommentContextProvider>
           </UserContextProvider>
         </CategoryContextProvider>
       </MovieContextProvider>

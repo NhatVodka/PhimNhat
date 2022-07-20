@@ -1,16 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 import useSWR from "swr";
+import Comments from "../../components/comments/Comments";
+import MovieCredit from "../../components/movieCredit/MovieCredit";
+import MovieTrailer from "../../components/movieTrailer/MovieTrailer";
 import MovieSimilar from "../../components/similarMovie/MovieSimilar";
 import { fetcher } from "../../config";
-import { AuthContext } from "../../contexts/authContext/AuthContext";
-
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import MovieCard from "../../components/MovieCard/MovieCard";
-// import axios from "axios";
 
 const MovieDetailPage = () => {
-  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const { data } = useSWR(`${id ? `/movies/${id}` : ""}`, fetcher);
   if (!data) return null;
@@ -60,93 +57,10 @@ const MovieDetailPage = () => {
       </p>
       <MovieCredit></MovieCredit>
       <MovieTrailer></MovieTrailer>
-      <MovieSimilar genre={genre}></MovieSimilar>
-      {!user ? (
-        <textarea
-          className="h-15 w-full p-4 outline-none rounded text-black"
-          type="text"
-          placeholder="Write your comment"
-        />
-      ) : (
-        <div className="comment-section border-t-2 border-gray-700 ml-4 ">
-          <h2 className="text-4xl mb-5 mt-5">Comment</h2>
-          <div>
-            <form className="w-[400px] flex flex-col">
-              <textarea
-                className="h-15 w-full p-4 outline-none rounded text-black"
-                type="text"
-                placeholder="Write your comment"
-              />
-              <button className="mt-3 p-1 text-sm border-2 self-end cursor-pointer rounded-sm">
-                Send
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      <MovieSimilar genre={genre} id={id}></MovieSimilar>
+      <Comments id={id}></Comments>
     </div>
   );
 };
-
-function MovieCredit() {
-  const { id } = useParams();
-  const { data } = useSWR(`${id ? `/movies/${id}` : ""}`, fetcher);
-  if (!data) return null;
-  const { cast } = data;
-  if (!cast || cast.length < 0) return null;
-  return (
-    <>
-      <h2 className=" text-3xl mb-10 ">Casts</h2>
-      <div className="grid grid-cols-4 gap-5">
-        {cast.map((item) => (
-          <div className="cast-item" key={item}>
-            <img
-              className="w-full h-[350px] object-cover rounded-lg mb-3"
-              src={item}
-              alt=""
-            />
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
-
-function MovieTrailer() {
-  const { id } = useParams();
-  const { data } = useSWR(`${id ? `/movies/${id}` : ""}`, fetcher);
-  if (!data) return null;
-  const { trailer } = data;
-  if (!trailer || trailer.length <= 0) return null;
-  return (
-    <>
-      <div className="py-10">
-        <h1 className="text-3xl mb-6">Trailer</h1>
-        <div className="grid grid-cols-2 gap-10">
-          {trailer.map((item) => (
-            <div className="" key={item}>
-              <div key={item.id} className="w-full aspect-video">
-                <iframe
-                  width="885"
-                  height="498"
-                  src={
-                    item.includes("/watch?v=")
-                      ? item.replace("/watch?v=", "/embed/")
-                      : item
-                  }
-                  title="YOU'RE TOO LITTLE BOY! We Invaded D1 School Full of TRASH TALKERS!! 5v5 ECS Streetball"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="w-full h-full object-fill"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-}
 
 export default MovieDetailPage;

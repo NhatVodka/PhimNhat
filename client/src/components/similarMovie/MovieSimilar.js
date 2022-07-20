@@ -1,28 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useParams } from "react-router";
 import MovieCard from "../MovieCard/MovieCard";
 
-const MovieSimilar = ({ genre }) => {
-  const [genre1, ...rest] = genre;
-  const { id } = useParams();
+const MovieSimilar = ({ genre, id }) => {
+  const [genre1] = genre;
+
   const [similarMovies, setSimilarMovies] = useState([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSimilarMovies = async () => {
     try {
-      const res = await axios.get(`genre${genre1 ? `?Genre=${genre1}` : ""}`, {
+      const res = await axios.get(`/movies/`, {
         headers: {
           token: "nhat" + JSON.parse(localStorage.getItem("user")).accessToken,
         },
       });
-      console.log(res);
-      setSimilarMovies(res.data[0]?.Movies);
+      setSimilarMovies(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     getSimilarMovies();
   }, [id]);
@@ -34,7 +31,7 @@ const MovieSimilar = ({ genre }) => {
           {similarMovies &&
             similarMovies.length > 0 &&
             similarMovies
-              .filter((item) => item?._id !== id)
+              .filter((item) => item.genre.includes(genre1) && item._id !== id)
               .map((item) => (
                 <SwiperSlide key={item._id}>
                   <MovieCard item={item}></MovieCard>

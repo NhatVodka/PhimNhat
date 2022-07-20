@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import "./navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 
 const Navbar = () => {
@@ -21,6 +20,7 @@ const Navbar = () => {
           </div>
           <div className="item">
             <img className="w-7 h-7 rounded-md" src={user.profilePic} alt="" />
+            <h3 className="ml-2 text-xl font-bold">{user.username}</h3>
           </div>
         </div>
       </div>

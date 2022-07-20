@@ -108,25 +108,8 @@ const NewUser = () => {
                 onChange={handleChange}
               />
             </div>
-            {/* <div className="w-[400px] flex flex-col mt-4 mr-5 ">
-              <label className="mb-3 text-base font-semibold text-gray-900">
-                IsAdmin
-              </label>
-              <select
-                className="h-9 border-2 border-gray-400 rounded text-black"
-                name="isAdmin"
-                onChange={handleChange}
-              >
-                <option className="p-4 text-black" value={Boolean(true)}>
-                  Yes
-                </option>
-                <option className="p-4 text-black" value={false}>
-                  No
-                </option>
-              </select>
-            </div> */}
             <div className="w-[400px] flex flex-col mt-3 mr-5">
-              <label className=" text-base font-semibold text-black">
+              <label className="mb-[15px] text-base font-semibold text-black">
                 Profile Pic
               </label>
               <input
@@ -147,7 +130,7 @@ const NewUser = () => {
                 </button>
               </div>
             ) : (
-              <div className="w-[400px] flex flex-col mt-5 mr-5">
+              <div className="w-[400px] flex flex-col mt-3 mr-5">
                 <button
                   className="w-[200px] outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
                   onClick={handleUpload}

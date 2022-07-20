@@ -21,7 +21,6 @@ const NewMovie = () => {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [cast, setCast] = useState(null);
-  const [uploaded, setUploaded] = useState(0);
   const handleChange = (e) => {
     const value = e.target.files || e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
@@ -46,24 +45,20 @@ const NewMovie = () => {
     createMovie(movie, dispatch);
     navigate("/moviesAdmin");
   };
-  // console.log(movie);
+
   // Firebase configs
   const storage = getStorage();
-  const metadata = {
-    contentType: "image/jpeg",
-  };
-
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
-      const storageRef = ref(storage, `/items/` + fileName);
-      const uploadTask = uploadBytesResumable(storageRef, item.file, metadata);
+      const storageRef = ref(storage, "/items/" + fileName);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
       uploadTask.on(
         "state changed",
         (snapshot) => {
-          const progress = Math.trunc(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
           console.log("Upload is " + progress + " % done");
         },
         (err) => {
@@ -74,20 +69,20 @@ const NewMovie = () => {
             setMovie((prev) => {
               return { ...prev, [item.label]: url };
             });
-            setUploaded((prev) => prev + 1);
           });
         }
       );
     });
   };
+
   return (
     <div className="flex bg-white">
       <Sidebar />
       <div className="flex-[4]">
         <Navbar />
-        <div className="p-5">
+        <div className="p-5 text-black">
           <h1 className="text-2xl font-bold">New Movie</h1>
-          <form className="flex flex-wrap gap-5">
+          <form className="flex flex-wrap gap-5 text-black">
             <div className="w-[400px] flex flex-col mt-3">
               <label className="mb-3 text-base font-semibold text-gray-900">
                 Title
@@ -102,32 +97,26 @@ const NewMovie = () => {
             </div>
             <div className="w-[400px] flex flex-col mt-3">
               <label className="mb-3 text-base font-semibold text-gray-900">
+                Release_Date
+              </label>
+              <input
+                className="h-5 p-4 border-2 border-gray-400 rounded"
+                type="text"
+                placeholder="2022"
+                name="release_date"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-[400px] flex flex-col mt-3">
+              <label className="mb-3 text-base font-semibold text-gray-900">
                 Desc
               </label>
               <input
-                className="h-20 p-4 border-2 border-gray-400 rounded"
+                className=" h-[100px] p-4 border-2 border-gray-400 rounded"
                 type="email"
                 placeholder="JohnSmith1@gmail.com"
                 name="desc"
                 onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-col w-[400px] mt-3">
-              <label className="mb-1 text-lg text-gray-900 ">Poster</label>
-              <input
-                type="file"
-                className="outline-none"
-                name="poster_path"
-                onChange={(e) => setPoster_Path(e.target.files[0])}
-              />
-            </div>
-            <div className="flex flex-col w-[400px]  mt-3">
-              <label className="mb-1 text-lg  text-gray-900">Backdrop</label>
-              <input
-                type="file"
-                className="outline-none"
-                name="backdrop_path"
-                onChange={(e) => setBackdrop_Path(e.target.files[0])}
               />
             </div>
             <div className="w-[400px] flex flex-col mt-3 ">
@@ -149,18 +138,6 @@ const NewMovie = () => {
                 <option value="Comedy">Comedy</option>
               </select>
             </div>
-            <div className="w-[400px] flex flex-col mt-3">
-              <label className="mb-3 text-base font-semibold text-gray-900">
-                Release_Date
-              </label>
-              <input
-                className="h-5 p-4 border-2 border-gray-400 rounded"
-                type="text"
-                placeholder="2022"
-                name="release_date"
-                onChange={handleChange}
-              />
-            </div>
             <div className="w-[400px] flex flex-col mt-3 ">
               <label className="mb-3 text-base font-semibold text-gray-900">
                 Rating
@@ -173,18 +150,44 @@ const NewMovie = () => {
                 onChange={handleChange}
               />
             </div>
-
-            <div className="flex flex-col mt-4">
+            <div className="w-[400px] flex flex-col mt-3 ">
+              <label className="mb-3 text-base font-semibold text-gray-900">
+                Time
+              </label>
+              <input
+                className="h-5 p-4 border-2 border-gray-400 rounded"
+                type="text"
+                placeholder="100"
+                name="time"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="flex flex-col w-[400px] mt-3">
+              <label className="mb-1 text-lg text-gray-900 ">Poster</label>
+              <input
+                type="file"
+                className="outline-none"
+                name="poster_path"
+                onChange={(e) => setPoster_Path(e.target.files[0])}
+              />
+            </div>
+            <div className="flex flex-col w-[400px]  mt-3">
+              <label className="mb-1 text-lg  text-gray-900">Backdrop</label>
+              <input
+                type="file"
+                className="outline-none"
+                name="backdrop_path"
+                onChange={(e) => setBackdrop_Path(e.target.files[0])}
+              />
+            </div>
+            <div className="flex flex-col w-[400px]  mt-3">
               <label className="mb-1 text-lg text-gray-900 ">Casts</label>
               <input
                 multiple
                 type="file"
-                className="outline-none w-[400px]"
+                className="outline-none"
                 name="cast"
-                // onChange={(e) => {
-                //   setCast(e.target.files);
-                // }}
-                onChange={handleChange}
+                onChange={(e) => setCast(e.target.files[0])}
               />
             </div>
             <div className="flex flex-col mt-4">
@@ -205,25 +208,24 @@ const NewMovie = () => {
                 onChange={(e) => setVideo(e.target.files[0])}
               />
             </div>
-            {uploaded === 5 ? (
-              <div className="w-[400px] flex flex-col mt-3 mr-5">
+            <div className="flex mt-5">
+              <div className="mt-3 mr-10 ">
                 <button
-                  className="w-[200px] outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
-                  onClick={handleCreate}
-                >
-                  Create
-                </button>
-              </div>
-            ) : (
-              <div className="w-[400px] flex flex-col mt-3 mr-5">
-                <button
-                  className="w-[200px] outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
+                  className="w-[100px] outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
                   onClick={handleUpload}
                 >
                   Upload
                 </button>
               </div>
-            )}
+              <div className=" mt-3 ">
+                <button
+                  className="w-[100px] outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
+                  onClick={(e) => handleCreate(e)}
+                >
+                  Create
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
