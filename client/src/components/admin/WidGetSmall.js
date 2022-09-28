@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 const WidGetSmall = () => {
-  console.log(JSON.parse(localStorage.getItem("user")).accessToken);
   const [newUsers, setNewUsers] = useState([]);
   const getNewUSer = async () => {
     try {

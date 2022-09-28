@@ -22,7 +22,7 @@ const NewMovie = () => {
   const [video, setVideo] = useState(null);
   const [cast, setCast] = useState(null);
   const handleChange = (e) => {
-    const value = e.target.files || e.target.value;
+    const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
   };
 
@@ -45,7 +45,8 @@ const NewMovie = () => {
     createMovie(movie, dispatch);
     navigate("/moviesAdmin");
   };
-
+  console.log("cast", cast);
+  console.log("Movie", movie);
   // Firebase configs
   const storage = getStorage();
   const upload = (items) => {
@@ -183,7 +184,6 @@ const NewMovie = () => {
             <div className="flex flex-col w-[400px]  mt-3">
               <label className="mb-1 text-lg text-gray-900 ">Casts</label>
               <input
-                multiple
                 type="file"
                 className="outline-none"
                 name="cast"
@@ -202,6 +202,7 @@ const NewMovie = () => {
             <div className="flex flex-col mt-3">
               <label className="mb-1 text-lg text-gray-900">Video</label>
               <input
+                multiple
                 type="file"
                 className="outline-none w-[400px]"
                 name="video"
