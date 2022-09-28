@@ -51,7 +51,7 @@ const NewMovie = () => {
   const storage = getStorage();
   const upload = (items) => {
     items.forEach((item) => {
-      const fileName = new Date().getTime() + item.label + item.file.name;
+      const fileName = new Date().getTime() + item.label + item?.file?.name;
       const storageRef = ref(storage, "/items/" + fileName);
       const uploadTask = uploadBytesResumable(storageRef, item.file);
       uploadTask.on(
