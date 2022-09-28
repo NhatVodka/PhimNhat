@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 const WidGetSmall = () => {
+  console.log(JSON.parse(localStorage.getItem("user")).accessToken);
   const [newUsers, setNewUsers] = useState([]);
   const getNewUSer = async () => {
     try {
       const res = await axios.get(`/users?new=true`, {
         headers: {
           token:
-            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjJiOGY0MzQ1ZTY3YzQ4YTU4MjM5NiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1ODI5Njc2MCwiZXhwIjoxNjU4NzI4NzYwfQ.Tnp1gOkhVWN5M8JZgEKudZwVtgzT0X5x5d4J4rslzuY",
+            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzEwMTgxMDU1OGIxNjdhNGIyY2Y1NSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2NDE1NjY2MywiZXhwIjoxNjY0NTg4NjYzfQ.Y8uDGrvQf9IGrdBHxnlu51ukyKMOUzGCqM_p_wcpQvo",
         },
       });
       setNewUsers(res.data);
