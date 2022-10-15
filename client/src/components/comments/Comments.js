@@ -42,7 +42,10 @@ const Comments = ({ id }) => {
           <div className="flex gap-5">
             <img
               className="w-10 h-10 rounded-full"
-              src={user.profilePic}
+              src={
+                user.profilePic ||
+                "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+              }
               alt=""
             />
             <form className="w-[400px] flex flex-col">

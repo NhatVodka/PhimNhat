@@ -6,7 +6,6 @@ import { CommentContext } from "../../contexts/commentContext/CommentContext";
 
 const Comment = ({ comment, fetchComments }) => {
   const [userComment, setUserComment] = useState({});
-  console.log(comment);
   const { dispatch } = useContext(CommentContext);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchUserComment = async () => {
@@ -27,17 +26,24 @@ const Comment = ({ comment, fetchComments }) => {
       fetchComments();
     });
   };
+  const [yyyy, mm, dd] = comment.createdAt.split(/[/:\-T]/);
   return (
     <>
       <div className="flex items-center m-5 gap-5 ml-4">
         <img
           className="w-10 h-10 rounded-full mt-5"
-          src={userComment.profilePic}
+          src={
+            userComment.profilePic ||
+            "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+          }
           alt=""
         />
         <div className="flex flex-col gap-2 mt-5 ">
           <div className="flex justify-between w-[400px]">
-            <h2>{userComment.username}</h2>
+            <div className="flex gap-5">
+              <h2>{userComment.username}</h2>
+              <p className=" opacity-70">{`${mm}/${dd}/${yyyy}`}</p>
+            </div>
             <button
               onClick={(e) => handleDelete(e, comment._id)}
               className="text-base font-bold"

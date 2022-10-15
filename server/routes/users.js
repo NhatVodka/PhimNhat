@@ -66,7 +66,7 @@ router.get("/stats", async (req, res) => {
     res.status(500).json(error);
   }
 });
-// GET
+// GET USer By Id
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

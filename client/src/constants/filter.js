@@ -30,7 +30,7 @@ export const countryOptions = [
   { value: "IN", label: "India" },
   { value: "JP", label: "Japan" },
   { value: "ES", label: "Spain" },
-  { value: "Comedy", label: "Comedy" },
+  { value: "VN", label: "Viet Nam" },
 ];
 
 export const yearOptions = [

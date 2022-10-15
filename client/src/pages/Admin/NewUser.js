@@ -36,7 +36,6 @@ const NewUser = () => {
   const metadata = {
     contentType: "image/jpeg",
   };
-  console.log(user);
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;

@@ -104,7 +104,10 @@ const User = () => {
               <div className="flex items-center">
                 <img
                   className="w-10 h-10 rounded-full object-cover"
-                  src={user.profilePic}
+                  src={
+                    user.profilePic ||
+                    "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+                  }
                   alt=""
                 />
                 <div className="flex flex-col ml-3 text-black">
@@ -188,7 +191,10 @@ const User = () => {
                   <div>
                     <img
                       className="w-[100px] h-[100px] rounded-lg object-cover mr-5"
-                      src={user.profilePic}
+                      src={
+                        user.profilePic ||
+                        "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+                      }
                       alt=""
                     />
                   </div>

@@ -9,6 +9,7 @@ const MovieCredit = () => {
   if (!data) return null;
   const { cast } = data;
   if (!cast || cast.length < 0) return null;
+  // console.log(cast[0]);
   return (
     <>
       <h2 className=" text-3xl mb-10 ">Casts</h2>

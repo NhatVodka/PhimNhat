@@ -40,7 +40,10 @@ const UserList = () => {
         return (
           <div className="flex items-center">
             <img
-              src={params.row.profilePic}
+              src={
+                params.row.profilePic ||
+                "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+              }
               className="w-8 h-8 rounded-[50%] object-cover mr-3"
               alt=""
             />
