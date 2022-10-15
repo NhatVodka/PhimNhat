@@ -5,38 +5,22 @@ import Header from "../../components/layout/Header";
 import MovieList from "../../components/MovieList/MovieList";
 
 const HomePage = () => {
-  const [category, setCategory] = useState([]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getCategory = async () => {
-    try {
-      const res = await axios.get(`/category`);
-      setCategory(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getCategory();
-  }, []);
-  // console.log(category);
   return (
-    <Fragment>
+    <div className="relative h-screen bg-gradient-to-blg:h-[140vh]">
       <Header></Header>
-      <Banner></Banner>
-      {category &&
-        category.length > 0 &&
-        category.map((item) => (
-          <section
-            key={item._id}
-            className="movies-layout page-container pb-20"
-          >
-            <h2 className="mb-5 text-3xl capitalize text-white font-bold">
-              {item.categoryName}
-            </h2>
-            <MovieList categoryName={item.categoryName}></MovieList>
-          </section>
-        ))}
-    </Fragment>
+      <main className="relative pl-4 pb-24 lg:space-y24 lg:pl-16">
+        <Banner />
+        <section className=" md:space-y-24">
+          <MovieList title="Now Playing" />
+          <MovieList title="Top Rated" />
+          <MovieList title="Popular" />
+          {/* My List */}
+          {/* {list.length > 0 && <MovieList title="My List" movies={list} />} */}
+
+          <MovieList title="Upcoming" />
+        </section>
+      </main>
+    </div>
   );
 };
 

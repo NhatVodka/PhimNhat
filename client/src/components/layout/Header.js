@@ -1,92 +1,63 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-
+import { MagnifyingGlassIcon, BellIcon } from "@heroicons/react/24/solid";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import { logout } from "../../contexts/authContext/AuthAction";
 
 const Header = () => {
   const { dispatch, user } = useContext(AuthContext);
-  const [isScrolled, setIsScroled] = useState(false);
+  const [isScroll, setIsScroll] = useState(false);
 
-  window.onscroll = () => {
-    setIsScroled(window.pageYOffset === 0 ? false : true);
-    return () => (window.onscroll = null);
-  };
-  return (
-    <div
-      className={
-        isScrolled
-          ? "flex items-center justify-between gap-8  top-0 fixed z-30 w-full bg-[#0b0b0b] h-16 px-10"
-          : "flex items-center justify-between gap-8 top-0 fixed z-30 w-full h-16 px-10"
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
       }
-    >
-      <div className="flex items-center ">
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  return (
+    <header className={`${isScroll && "bg-[#141414]"}`}>
+      <div className="flex items-center space-x-2 md:space-x-10">
         <NavLink to="/" className="text-primary font-bold text-3xl">
           PhimNhat
         </NavLink>
-        <div className="flex gap-5 text-xl ml-5">
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/category"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Category
-          </NavLink>
-          <NavLink
-            to="/movies"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Movie
-          </NavLink>
-          <NavLink
-            to="/search"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Search
-          </NavLink>
+
+        <ul className="hidden space-x-4 md:flex">
+          <li className="headerLink">Home</li>
+          <li className="headerLink">TV Shows</li>
+          <li className="headerLink">Movies</li>
+          <li className="headerLink">New & Popular</li>
+          <li className="headerLink">My List</li>
           {user?.isAdmin === true && (
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) => (isActive ? "text-primary" : "")}
-            >
+            <NavLink to="/dashboard" className="headerLink">
               Dashboard
             </NavLink>
           )}
-        </div>
+        </ul>
       </div>
-      {user ? (
-        <div className="flex items-center gap-3">
+      <div className="flex items-center space-x-4 text-sm font-light">
+        <MagnifyingGlassIcon className="hidden sm:inline  h-6 w-6" />
+        <p className="hidden lg:inline">Kids</p>
+        <BellIcon className="h-6 w-6" />
+        <NavLink to="/login">
           <img
-            className="w-8 h-8 rounded-md object-cover"
-            src={
-              user.profilePic ||
-              "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
-            }
-            alt="Profile of user"
+            onClick={() => dispatch(logout())}
+            src="https://occ-0-1190-2774.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABbme8JMz4rEKFJhtzpOKWFJ_6qX-0y5wwWyYvBhWS0VKFLa289dZ5zvRBggmFVWVPL2AAYE8xevD4jjLZjWumNo.png?r=a41"
+            alt=""
+            className="cursor-pointer rounded"
           />
-          <h2>{user.username}</h2>
-          <div className="profile ">
-            <ArrowDropDownIcon />
-            <div className="options right-2">
-              <button onClick={() => dispatch(logout())}>Log out</button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <NavLink
-          to="/login"
-          className=" py-1 px-6 text-lg bg-primary hover:bg-[#db0510] rounded-sm font-medium z-30"
-        >
-          Sign in
         </NavLink>
-      )}
-    </div>
+      </div>
+    </header>
   );
 };
 
