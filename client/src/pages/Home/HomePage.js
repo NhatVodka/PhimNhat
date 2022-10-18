@@ -1,10 +1,13 @@
-import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
 import Banner from "../../components/banner/Banner";
 import Header from "../../components/layout/Header";
+import Modal from "../../components/modal/Modal";
 import MovieList from "../../components/MovieList/MovieList";
 
 const HomePage = () => {
+  const showModal = useRecoilValue(modalState);
   return (
     <div className="relative h-screen bg-gradient-to-blg:h-[140vh]">
       <Header></Header>
@@ -20,6 +23,7 @@ const HomePage = () => {
           <MovieList title="Upcoming" />
         </section>
       </main>
+      {showModal && <Modal />}
     </div>
   );
 };

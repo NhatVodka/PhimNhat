@@ -8,20 +8,23 @@ import { MovieContextProvider } from "./contexts/movieContext/MovieContext";
 import { CategoryContextProvider } from "./contexts/categoryContext/CategoryContext";
 import { UserContextProvider } from "./contexts/userContext/UserContext";
 import { CommentContextProvider } from "./contexts/commentContext/CommentContext";
+import { RecoilRoot } from "recoil";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <AuthContextProvider>
-      <MovieContextProvider>
-        <CategoryContextProvider>
-          <UserContextProvider>
-            <CommentContextProvider>
-              <App />
-            </CommentContextProvider>
-          </UserContextProvider>
-        </CategoryContextProvider>
-      </MovieContextProvider>
-    </AuthContextProvider>
-  </BrowserRouter>
+  <RecoilRoot>
+    <BrowserRouter>
+      <AuthContextProvider>
+        <MovieContextProvider>
+          <CategoryContextProvider>
+            <UserContextProvider>
+              <CommentContextProvider>
+                <App />
+              </CommentContextProvider>
+            </UserContextProvider>
+          </CategoryContextProvider>
+        </MovieContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
+  </RecoilRoot>
 );
