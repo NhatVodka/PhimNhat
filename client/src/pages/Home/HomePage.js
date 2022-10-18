@@ -9,7 +9,11 @@ import MovieList from "../../components/MovieList/MovieList";
 const HomePage = () => {
   const showModal = useRecoilValue(modalState);
   return (
-    <div className="relative h-screen bg-gradient-to-blg:h-[140vh]">
+    <div
+      className={`relative h-screen bg-gradient-to-blg:h-[140vh] ${
+        showModal && "!hidden overflow-hidden"
+      }`}
+    >
       <Header></Header>
       <main className="relative pl-4 pb-24 lg:space-y24 lg:pl-16">
         <Banner />
