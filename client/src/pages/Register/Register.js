@@ -35,7 +35,9 @@ const Register = () => {
     <div className="register w-full h-screen relative">
       <div className="top">
         <div className="wrapper py-5 px-12 flex items-center justify-between">
-          <h1 className="text-primary font-bold text-5xl">PhimNhat</h1>
+          <h1 className="left-4 text-[#e50914] font-bold text-5xl top-4 cursor-pointer object-contain md:left-10 md:top-6">
+            PhimNhat
+          </h1>
           <NavLink
             to="/login"
             className=" py-1 px-6 text-lg bg-primary hover:bg-[#db0510] rounded-sm font-medium z-30"

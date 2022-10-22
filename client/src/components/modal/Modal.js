@@ -101,8 +101,10 @@ const Modal = () => {
                   <span className="text-[gray]">Country: </span>
                   {movie?.country}
                 </div>
-                <span className="text-[gray]">Time: </span>
-                {movie?.time}
+                <div>
+                  <span className="text-[gray]">Time: </span>
+                  {movie?.time}
+                </div>
               </div>
             </div>
           </div>

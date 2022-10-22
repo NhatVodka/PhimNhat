@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
 import { useRecoilValue } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import Banner from "../../components/banner/Banner";
