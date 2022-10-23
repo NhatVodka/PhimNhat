@@ -20,9 +20,9 @@ const Login = () => {
 
   const onSubmit = () => {
     login({ email, password }, dispatch);
-    if (user) {
-      navigate("/");
-    }
+    // if (user) {
+    //   navigate("/");
+    // }
   };
 
   return (

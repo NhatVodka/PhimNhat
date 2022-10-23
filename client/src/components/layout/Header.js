@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MagnifyingGlassIcon, BellIcon } from "@heroicons/react/24/solid";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import { logout } from "../../contexts/authContext/AuthAction";
 
