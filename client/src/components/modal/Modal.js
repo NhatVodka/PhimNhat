@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { modalState, movieState } from "../../atoms/modalAtom";
 import {
   HandThumbUpIcon,
+  InformationCircleIcon,
   PlusIcon,
   SpeakerWaveIcon,
   SpeakerXMarkIcon,
@@ -11,6 +12,7 @@ import {
 } from "@heroicons/react/24/solid";
 import ReactPlayer from "react-player";
 import { FaPlay } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const Modal = () => {
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [movie, setMovie] = useRecoilState(movieState);
@@ -60,12 +62,20 @@ const Modal = () => {
                 <FaPlay className="h-7 w-7 text-black" />
                 Play
               </button>
-
+              <Link to={`/detail/${movie._id}`}>
+                <button
+                  className="bannerButton bg-[gray]/70"
+                  // onClick={() => {
+                  //   setCurrentMovie(movie);
+                  //   setShowModal(true);
+                  // }}
+                >
+                  <InformationCircleIcon className="h-7 w-7 md:h-8 md:w-8" />
+                  More Info
+                </button>
+              </Link>
               <button className="modalButton">
                 <PlusIcon className="h-7 w-7" />
-              </button>
-              <button className="modalButton">
-                <HandThumbUpIcon className="h-7 w-7" />
               </button>
             </div>
 

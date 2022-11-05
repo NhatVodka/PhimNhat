@@ -38,14 +38,9 @@ function App() {
     <Fragment>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/register"
-          element={!user ? <Register /> : <Navigate to="/" replace={true} />}
-        />
-        <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" replace={true} />}
-        ></Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+
         <Route element={<Main />}>
           <Route path="/movies" element={checkUser(MoviePage)}></Route>
           <Route path="/search" element={checkUser(SearchPage)}></Route>

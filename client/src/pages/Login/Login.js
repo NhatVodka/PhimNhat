@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const { dispatch, user, signInWithGoogle, signInWithFacebook } =
+  const { dispatch, signInWithGoogle, signInWithFacebook } =
     useContext(AuthContext);
 
   const {
@@ -20,9 +20,7 @@ const Login = () => {
 
   const onSubmit = () => {
     login({ email, password }, dispatch);
-    // if (user) {
-    //   navigate("/");
-    // }
+    navigate("/");
   };
 
   return (

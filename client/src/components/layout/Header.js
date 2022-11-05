@@ -32,9 +32,15 @@ const Header = () => {
 
         <ul className="hidden space-x-4 md:flex">
           <li className="headerLink">Home</li>
-          <li className="headerLink">TV Shows</li>
-          <li className="headerLink">Movies</li>
-          <li className="headerLink">New & Popular</li>
+          <NavLink to="/movies">
+            <li className="headerLink">Movies</li>
+          </NavLink>
+          <NavLink to="/category">
+            <li className="headerLink">Category</li>
+          </NavLink>
+          <NavLink to="/search">
+            <li className="headerLink">Search</li>
+          </NavLink>
           <li className="headerLink">My List</li>
           {user?.isAdmin === true && (
             <NavLink to="/dashboard" className="headerLink">

@@ -1,6 +1,10 @@
+import axios from "axios";
 import { React, useEffect, useState } from "react";
 
 import Select from "react-select";
+import { useRecoilValue } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
+import Modal from "../../components/modal/Modal";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import {
   genreOptions,
@@ -11,6 +15,7 @@ import {
 import { fetchMovie } from "../../services/movie";
 
 const CategoryPage = () => {
+  const showModal = useRecoilValue(modalState);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [countrySelected, setCountrySelected] = useState(null);
@@ -19,15 +24,15 @@ const CategoryPage = () => {
   const [genreselected, setGenreSelected] = useState(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getMovies = async () => {
-    try {
-      const data = await fetchMovie();
-      setMovies(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
+    const getMovies = async () => {
+      try {
+        const res = await axios.get(`movies/`);
+        setMovies(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getMovies();
     setLoading(false);
   }, []);
@@ -101,7 +106,7 @@ const CategoryPage = () => {
       yearSelected ||
       timeSelected.length > 0 ? (
         <div className="py-10 mt-10 px-7 ">
-          <div className="grid grid-cols-4 gap-10">
+          <div className="grid grid-cols-6 gap-10  mx-10">
             {movies.length > 0 &&
               movies
                 .filter(
@@ -120,17 +125,15 @@ const CategoryPage = () => {
                         Number(movie.time) <= Number(timeSelected[1])
                       : movie)
                 )
-                .map((item) => (
-                  <MovieCard key={item._id} item={item}></MovieCard>
-                ))}
+                .map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+            {showModal && <Modal />}
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-10 mt-10">
+        <div className="grid grid-cols-6 gap-10 mt-10 md:grid-flow-col-4  mx-10">
           {movies.length > 0 &&
-            movies.map((item) => (
-              <MovieCard key={item._id} item={item}></MovieCard>
-            ))}
+            movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+          {showModal && <Modal />}
         </div>
       )}
     </>

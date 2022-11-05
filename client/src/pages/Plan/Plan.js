@@ -1,15 +1,31 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { logout } from "../../contexts/authContext/AuthAction";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import Table from "../../components/Table/Table";
 import Loading from "../../components/Loading/Loading";
-import { loadCheckout } from "../../lib/stripe";
-const Plan = ({ products }) => {
+import payments, { loadCheckout } from "../../lib/stripe";
+import { getProducts } from "@stripe/firestore-stripe-payments";
+const Plan = () => {
   const { dispatch, user } = useContext(AuthContext);
-  const [selectedPlan, setSelectedPlan] = useState(products && products[1]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
   const [isBillingLoading, setBillingLoading] = useState(false);
 
+  const [products, setProducts] = useState(null);
+  const getProductData = async () => {
+    try {
+      const res = await getProducts(payments, {
+        includePrices: true,
+        activeOnly: true,
+      });
+      setProducts(res);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getProductData();
+  }, []);
   const subscribeToPlan = () => {
     if (!user) return;
     loadCheckout(selectedPlan?.prices[0]?.id);
