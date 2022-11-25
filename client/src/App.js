@@ -20,6 +20,7 @@ import MovieDetailPage from "./pages/MovieDetailPage/MovieDetailPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import NotAllowedPage from "./pages/NotAllowedPage/NotAllowedPage";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
 import SearchPage from "./pages/Search/SearchPage";
 import WatchMovie from "./pages/WatchMoviePage/WatchMovie";
@@ -52,6 +53,7 @@ function App() {
           <Route path="*" element={<PageNotFound />}></Route>
         </Route>
         <Route path="/watch/:id" element={checkUser(WatchMovie)}></Route>
+        <Route path="/profile" element={checkUser(Profile)}></Route>
         <Route path="/dashboard">
           <Route index element={checkAdmin(Home)}></Route>
         </Route>

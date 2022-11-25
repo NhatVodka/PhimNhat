@@ -4,7 +4,6 @@ import { useRecoilValue } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import Modal from "../../components/modal/Modal";
 import MovieCard from "../../components/MovieCard/MovieCard";
-import { fetchMovie } from "../../services/movie";
 
 const SearchPage = () => {
   const [movies, setMovies] = useState([]);
@@ -37,7 +36,7 @@ const SearchPage = () => {
           <div className="w-10 h-10 rounded-full border-4 border-primary border-t-transparent border-t-4 mx-auto animate-spin mt-5"></div>
         )}
       </div>
-      <div className="grid grid-cols-6 gap-10 mt-10 mx-10">
+      <div className="grid grid-cols-5 gap-y-8 mt-10 mx-10">
         {!loading &&
           movies.length > 0 &&
           movies

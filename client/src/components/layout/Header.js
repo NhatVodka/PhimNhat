@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MagnifyingGlassIcon, BellIcon } from "@heroicons/react/24/solid";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
-import { logout } from "../../contexts/authContext/AuthAction";
+import BasicMenu from "../basicMenu/BasicMenu";
 
 const Header = () => {
-  const { dispatch, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isScroll, setIsScroll] = useState(false);
 
   useEffect(() => {
@@ -30,8 +30,12 @@ const Header = () => {
           PhimNhat
         </NavLink>
 
+        <BasicMenu />
+
         <ul className="hidden space-x-4 md:flex">
-          <li className="headerLink">Home</li>
+        <NavLink to="/">
+            <li className="headerLink">Home</li>
+          </NavLink>
           <NavLink to="/movies">
             <li className="headerLink">Movies</li>
           </NavLink>
@@ -53,9 +57,8 @@ const Header = () => {
         <MagnifyingGlassIcon className="hidden sm:inline  h-6 w-6" />
         <p className="hidden lg:inline">Kids</p>
         <BellIcon className="h-6 w-6" />
-        <NavLink to="/login">
+        <NavLink to="/profile">
           <img
-            onClick={() => dispatch(logout())}
             src="https://occ-0-1190-2774.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABbme8JMz4rEKFJhtzpOKWFJ_6qX-0y5wwWyYvBhWS0VKFLa289dZ5zvRBggmFVWVPL2AAYE8xevD4jjLZjWumNo.png?r=a41"
             alt=""
             className="cursor-pointer rounded"

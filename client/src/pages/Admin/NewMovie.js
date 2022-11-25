@@ -45,8 +45,6 @@ const NewMovie = () => {
     createMovie(movie, dispatch);
     navigate("/moviesAdmin");
   };
-  console.log("cast", cast);
-  console.log("Movie", movie);
   // Firebase configs
   const storage = getStorage();
   const upload = (items) => {

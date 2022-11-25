@@ -12,7 +12,6 @@ import {
   yearOptions,
   timeOptions,
 } from "../../constants/filter";
-import { fetchMovie } from "../../services/movie";
 
 const CategoryPage = () => {
   const showModal = useRecoilValue(modalState);
@@ -130,7 +129,7 @@ const CategoryPage = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-6 gap-10 mt-10 md:grid-flow-col-4  mx-10">
+        <div className="grid grid-cols-5 gap-y-8 mt-10">
           {movies.length > 0 &&
             movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
           {showModal && <Modal />}
