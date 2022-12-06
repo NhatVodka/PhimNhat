@@ -33,9 +33,11 @@ const Banner = () => {
       <h1 className="text-2xl lg:text-7xl md:text-4xl font-bold">
         {movie?.title}
       </h1>
+      {movie.desc && movie.desc.length > 0 && (
       <p className=" max-w-xs text-shadow-md text-xs md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl">
-        {movie?.desc}
+        {movie?.desc?.length > 100 ? movie?.desc.slice(0,100) + "..." : movie?.desc}
       </p>
+      )}
 
       <div className="flex space-x-3">
         <button className="bannerButton bg-white text-black">

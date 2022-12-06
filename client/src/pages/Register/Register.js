@@ -3,9 +3,15 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
   const navigate = useNavigate();
+  const showToastMessage = () => {
+      toast.success('Success Notification !', {
+        position: toast.POSITION.TOP_RIGHT
+      });
+};
   const {
     register,
     handleSubmit,
@@ -19,7 +25,9 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       await axios.post("auth/register", { email, username, password });
-      navigate("/login");
+      setTimeout(() => {
+        navigate("/login")
+      },2000)
     } catch (error) {
       console.log(error);
     }
@@ -32,21 +40,23 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   return (
+    <>
+
     <div className="register w-full h-screen relative">
-      <div className="top">
-        <div className="wrapper py-5 px-12 flex items-center justify-between">
+      <div>
+        <div className="py-5 px-12 flex items-center justify-between">
           <h1 className="left-4 text-[#e50914] font-bold text-5xl top-4 cursor-pointer object-contain md:left-10 md:top-6">
             PhimNhat
           </h1>
           <NavLink
             to="/login"
-            className=" py-1 px-6 text-lg bg-primary hover:bg-[#db0510] rounded-sm font-medium z-30"
+            className=" py-1 px-6 text-lg bg-primary hover:bg-[#db0510] rounded-sm font-medium z-30 cursor-pointer"
           >
             Sign in
           </NavLink>
         </div>
       </div>
-      <div className="container w-full  h-full left-0 top-0 absolute flex items-center justify-center flex-col text-white">
+      <div className="w-full  h-full left-0 top-0 absolute flex items-center justify-center flex-col text-white">
         <h1 className="text-[3.125rem] font-bold">
           Unlimited movies, TV shows, and more.
         </h1>
@@ -59,11 +69,10 @@ const Register = () => {
         {!email && (
           <form
             onSubmit={handleSubmit2(onSubmitEmail)}
-            className="relative input w-[50%] bg-white flex items-center justify-between mt-5 h-[70px] rounded"
+            className="relative w-[50%] bg-white flex items-center justify-between mt-5 h-[70px] rounded"
           >
             <input
               className="flex-[9] h-[50%] px-[10px] py-0  text-black outline-none"
-              // ref={emailRef}
               name="email"
               type="email"
               placeholder="email address"
@@ -89,10 +98,10 @@ const Register = () => {
         {email && (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="relative input w-[50%] bg-white flex items-center justify-between mt-5 h-[70px] rounded"
+            className="relative w-[50%] bg-white flex items-center justify-between mt-5 h-[70px] rounded"
           >
             <input
-              className="flex-[9] h-[50%] py-0 px-[10px] text-black outline-none"
+              className="flex-[9] h-full py-0 px-[10px] text-black outline-none"
               type="text"
               name="username"
               placeholder="username"
@@ -113,7 +122,7 @@ const Register = () => {
               </div>
             )}
             <input
-              className="flex-[9] h-[50%] py-0 px-[10px] text-black outline-none"
+              className="flex-[9]  h-full py-0 px-[10px] text-black outline-none"
               type="password"
               name="password"
               placeholder="password"
@@ -136,7 +145,8 @@ const Register = () => {
             )}
             <button
               type="submit"
-              className="text-white text-2xl font-light cursor-pointer flex-[3] h-full bg-primary outline-none"
+              className="text-white text-2xl font-light cursor-pointer flex-[3] h-full bg-[#db0510] hover:bg-primary"
+              onClick={showToastMessage}
             >
               Start
             </button>
@@ -144,6 +154,9 @@ const Register = () => {
         )}
       </div>
     </div>
+    <ToastContainer />
+    </>
+    
   );
 };
 
