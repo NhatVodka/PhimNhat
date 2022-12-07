@@ -8,7 +8,7 @@ const WidGetSmall = () => {
       const res = await axios.get(`/users?new=true`, {
         headers: {
           token:
-            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzI1ODU4ZTJjNDU5ZWRkNWE4MDMwYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY2OTA0MjQ4NCwiZXhwIjoxNjY5NDc0NDg0fQ.ZZyNyVoJ95F8x9B9RA4N_B1OK-6YfKjJSh1rYBIdCZA",
+            "nhat eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOTBhNTFlY2M4MGZjNTg0NWYwZmZmMiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY3MDQyNTcwMiwiZXhwIjoxNjcwODU3NzAyfQ.fSpujJlYvsFkCV5NInUsFWifIFiGqhHU-wjNtMsQEJk",
         },
       });
       setNewUsers(res.data);

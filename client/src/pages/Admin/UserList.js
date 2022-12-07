@@ -12,6 +12,7 @@ import { deleteUser, getUsers } from "../../contexts/userContext/apiCalls";
 
 const UserList = () => {
   const { users, dispatch } = useContext(UserContext);
+  console.log("user",users);
   useEffect(() => {
     getUsers(dispatch);
   }, []);

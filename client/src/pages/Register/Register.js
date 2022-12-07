@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
   const navigate = useNavigate();
   const showToastMessage = () => {
-      toast.success('Success Notification !', {
+      toast.success('SignUp Successfully!!', {
         position: toast.POSITION.TOP_RIGHT
       });
 };

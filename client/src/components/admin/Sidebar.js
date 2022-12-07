@@ -13,7 +13,7 @@ const Sidebar = () => {
       <div className="top h-[50px] flex items-center justify-center">
         <Link to="/">
           <span className="logo text-xl font-bold text-purple-600">
-            NhatAdmin
+            Dashboard
           </span>
         </Link>
       </div>
