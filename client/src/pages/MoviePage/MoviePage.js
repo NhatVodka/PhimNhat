@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
+import Card from "../../components/Card/Card";
 import Modal from "../../components/modal/Modal";
 import MovieCard from "../../components/MovieCard/MovieCard";
 
@@ -21,11 +22,10 @@ const MoviePage = () => {
   }, []);
   return (
     <div className="py-10 mt-20 px-7">
-      <div className="grid grid-cols-5 gap-y-8">
+      <div className="grid grid-cols-4 gap-10">
         {movies.length > 0 &&
-          movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+          movies.map((item) => <Card key={item._id} item={item} />)}
       </div>
-      {showModal && <Modal />}
     </div>
   );
 };

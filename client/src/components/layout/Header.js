@@ -45,7 +45,6 @@ const Header = () => {
           <NavLink to="/search">
             <li className="headerLink">Search</li>
           </NavLink>
-          <li className="headerLink">My List</li>
           {user?.isAdmin === true && (
             <NavLink to="/dashboard" className="headerLink">
               Dashboard

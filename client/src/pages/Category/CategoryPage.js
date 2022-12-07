@@ -4,6 +4,7 @@ import { React, useEffect, useState } from "react";
 import Select from "react-select";
 import { useRecoilValue } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
+import Card from "../../components/Card/Card";
 import Modal from "../../components/modal/Modal";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import {
@@ -104,8 +105,8 @@ const CategoryPage = () => {
       countrySelected ||
       yearSelected ||
       timeSelected.length > 0 ? (
-        <div className="py-10 mt-10 px-7 ">
-          <div className="grid grid-cols-6 gap-10  mx-10">
+        <div className="py-10 mt-10 px-7">
+          <div className="grid grid-cols-4 gap-10 mt-10 mx-10 ">
             {movies.length > 0 &&
               movies
                 .filter(
@@ -124,15 +125,14 @@ const CategoryPage = () => {
                         Number(movie.time) <= Number(timeSelected[1])
                       : movie)
                 )
-                .map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+                .map((item) => <Card key={item._id} item={item} />)}
             {showModal && <Modal />}
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-5 gap-y-8 mt-10">
+        <div className="grid grid-cols-4 gap-10 mt-10 mx-10">
           {movies.length > 0 &&
-            movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
-          {showModal && <Modal />}
+            movies.map((item) => <Card key={item._id} item={item} />)}
         </div>
       )}
     </>

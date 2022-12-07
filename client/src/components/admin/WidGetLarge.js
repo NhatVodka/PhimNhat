@@ -4,7 +4,6 @@ import MovieWidget from "./MovieWidget";
 import "./widgetLg.scss";
 const WidGetLarge = () => {
   const [lastestMovie, setLastestMovie] = useState([]);
-  // console.log('dasdasdsdad',JSON.parse(localStorage.getItem("user")).accessToken);
   const getLatestMovie = async () => {
     try {
       const res = await axios.get(`movies/`, {

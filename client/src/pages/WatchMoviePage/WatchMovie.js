@@ -9,7 +9,6 @@ const WatchMovie = () => {
   const { data } = useSWR(`${id ? `/movies/${id}` : ""}`, fetcher);
   if (!data) return null;
   const { video } = data;
-  console.log(video);
   return (
     <div className="text-3xl text-white">
       <div className="w-full h-screen aspect-video">
