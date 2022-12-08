@@ -134,7 +134,13 @@ const NewMovie = () => {
                 <option value="Drama">Drama</option>
                 <option value="Action">Action</option>
                 <option value="Crime">Crime</option>
-                <option value="Comedy">Comedy</option>
+                <option value="Family">Family</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Horror">Horror</option>
+                <option value="Thriller">Thriller</option>
+                <option value="ComeScience Fictiondy">Science Fiction</option>
+                <option value="Music">Music</option>
+                <option value="Mystery">MusiMysteryc</option>
               </select>
             </div>
             <div className="w-[400px] flex flex-col mt-3 ">
