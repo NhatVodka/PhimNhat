@@ -140,7 +140,7 @@ const NewMovie = () => {
                 <option value="Thriller">Thriller</option>
                 <option value="ComeScience Fictiondy">Science Fiction</option>
                 <option value="Music">Music</option>
-                <option value="Mystery">MusiMysteryc</option>
+                <option value="Mystery">Mystery</option>
               </select>
             </div>
             <div className="w-[400px] flex flex-col mt-3 ">
