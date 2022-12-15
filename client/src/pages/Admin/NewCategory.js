@@ -6,11 +6,18 @@ import { CategoryContext } from "../../contexts/categoryContext/CategoryContext"
 import { MovieContext } from "../../contexts/movieContext/MovieContext";
 import { getMovies } from "../../contexts/movieContext/apiCalls";
 import { createCategory } from "../../contexts/categoryContext/apiCalls";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const NewCategory = () => {
   const { dispatch } = useContext(CategoryContext);
   const { movies, dispatch: dispatchMovie } = useContext(MovieContext);
   const [category, setCategory] = useState(null);
   const navigate = useNavigate();
+  const showToastMessage = () => {
+    toast.success('Add NewCategory Successfully!!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+};
   useEffect(() => {
     getMovies(dispatchMovie);
   }, [dispatchMovie]);
@@ -31,11 +38,16 @@ const NewCategory = () => {
   };
   const handleCreate = (e) => {
     e.preventDefault();
+    showToastMessage();
     createCategory(category, dispatch);
-    navigate("/categoryAdmin/");
+    setTimeout(() => {
+      navigate("/categoryAdmin/");
+    },3000)
   };
 
   return (
+    <>
+
     <div className="flex bg-white">
       <Sidebar />
       <div className="flex-[4]">
@@ -91,6 +103,8 @@ const NewCategory = () => {
         </div>
       </div>
     </div>
+    <ToastContainer />
+    </>
   );
 };
 

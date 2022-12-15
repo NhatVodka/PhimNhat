@@ -10,7 +10,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../../contexts/movieContext/MovieContext";
 import { createMovie } from "../../contexts/movieContext/apiCalls";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LinearProgress from '@mui/material/LinearProgress';
 const NewMovie = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(MovieContext);
@@ -21,6 +23,12 @@ const NewMovie = () => {
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [cast, setCast] = useState(null);
+  const [progress, setProgress] = React.useState(0);
+  const showToastMessage = () => {
+    toast.success('Add NewMovie Successfully!!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+};
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
@@ -42,8 +50,11 @@ const NewMovie = () => {
   };
   const handleCreate = (e) => {
     e.preventDefault();
+    showToastMessage();
     createMovie(movie, dispatch);
-    navigate("/moviesAdmin");
+    setTimeout(() => {
+      navigate("/moviesAdmin");
+    },3000)
   };
   // Firebase configs
   const storage = getStorage();
@@ -57,8 +68,7 @@ const NewMovie = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          console.log("Upload is " + progress + " % done");
+          setProgress(progress)
         },
         (err) => {
           console.log(err);
@@ -75,6 +85,7 @@ const NewMovie = () => {
   };
 
   return (
+    <>
     <div className="flex bg-white">
       <Sidebar />
       <div className="flex-[4]">
@@ -232,9 +243,15 @@ const NewMovie = () => {
               </div>
             </div>
           </form>
+          {progress && progress < 100 ? (
+            <LinearProgress variant="determinate" value={progress} />
+          ) : ('')
+          }
         </div>
       </div>
     </div>
+    <ToastContainer />
+    </>
   );
 };
 

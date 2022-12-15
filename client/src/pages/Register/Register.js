@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ const Register = () => {
       toast.success('SignUp Successfully!!', {
         position: toast.POSITION.TOP_RIGHT
       });
-};
+  };
   const {
     register,
     handleSubmit,

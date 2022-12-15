@@ -7,7 +7,9 @@ import { useNavigate } from "react-router";
 const Profile = () => {
   const navigate = useNavigate();
   const { dispatch,user } = useContext(AuthContext);
-  const [yyyy, mm, dd] = user.createdAt.split(/[/:\-T]/);
+  if(user.createdAt){
+    var [yyyy, mm, dd] = user.createdAt.split(/[/:\-T]/);
+  }
   const handleLogout = () => {
     dispatch(logout())
     navigate("/login")
@@ -32,7 +34,9 @@ const Profile = () => {
           <h1 className='text-3xl md:text-4xl'>Account</h1>
           <div className='-ml-0.5 flex items-center gap-x-1.5'>
             <img src="https://assets.nflxext.com/ffe/siteui/account/svg/membersince.svg" alt="member" />
+            {mm && dd & yyyy ? (
             <p className='text-xs font-semibold text-[#555]'>Member since {`${mm}/${dd}/${yyyy}`}</p>
+            ) : ('')}
           </div>
         </div>
 

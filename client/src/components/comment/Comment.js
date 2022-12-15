@@ -3,8 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteComment } from "../../contexts/commentContext/apiCalls";
 import { CommentContext } from "../../contexts/commentContext/CommentContext";
-
-const Comment = ({ comment, fetchComments }) => {
+import Rating from '@mui/material/Rating';
+const Comment = ({ comment, fetchComments,rating }) => {
+  console.log(rating)
   const [userComment, setUserComment] = useState({});
   const { dispatch } = useContext(CommentContext);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,6 +45,11 @@ const Comment = ({ comment, fetchComments }) => {
               <h2>{userComment.username}</h2>
               <p className=" opacity-70">{`${mm}/${dd}/${yyyy}`}</p>
             </div>
+            <Rating
+                  name="simple-controlled"
+                  value={rating}
+                  disabled
+                />
             <button
               onClick={(e) => handleDelete(e, comment._id)}
               className="text-base font-bold"

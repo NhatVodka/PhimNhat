@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import Navbar from "../../components/admin/Navbar";
 import Sidebar from "../../components/admin/Sidebar";
 import storage from "../../Firebase";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   getStorage,
   ref,
@@ -11,14 +13,19 @@ import {
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext/UserContext";
 import { createUser } from "../../contexts/userContext/apiCalls";
-
+import LinearProgress from '@mui/material/LinearProgress';
 const NewUser = () => {
+  const showToastMessage = () => {
+    toast.success('Add NewUser Successfully!!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+};
   const navigate = useNavigate();
   const { dispatch } = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
   const [uploaded, setUploaded] = useState(0);
-
+  const [progress, setProgress] = React.useState(0);
   const handleChange = (e) => {
     const value = e.target.value;
     setUser({ ...user, [e.target.name]: value });
@@ -29,8 +36,11 @@ const NewUser = () => {
   };
   const handleCreate = (e) => {
     e.preventDefault();
+    showToastMessage();
     createUser(user, dispatch);
-    navigate("/usersAdmin/");
+    setTimeout(() => {
+      navigate("/usersAdmin/");
+    },3000)
   };
   const storage = getStorage();
   const metadata = {
@@ -47,7 +57,7 @@ const NewUser = () => {
           const progress = Math.trunc(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          console.log("Upload is " + progress + " % done");
+          setProgress(progress)
         },
         (err) => {
           console.log(err);
@@ -64,6 +74,8 @@ const NewUser = () => {
     });
   };
   return (
+    <>
+
     <div className="flex bg-white">
       <Sidebar />
       <div className="flex-[4]">
@@ -139,9 +151,15 @@ const NewUser = () => {
               </div>
             )}
           </form>
+          {progress && progress < 100 ? (
+            <LinearProgress variant="determinate" value={progress} />
+          ) : ('')
+          }
         </div>
       </div>
     </div>
+    <ToastContainer />
+    </>
   );
 };
 

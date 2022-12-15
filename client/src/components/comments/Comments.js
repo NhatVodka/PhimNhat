@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import { createComment } from "../../contexts/commentContext/apiCalls";
 import { CommentContext } from "../../contexts/commentContext/CommentContext";
+import Rating from '@mui/material/Rating';
 import Comment from "../comment/Comment";
 
 const Comments = ({ id }) => {
@@ -11,6 +12,7 @@ const Comments = ({ id }) => {
   const { dispatch } = useContext(CommentContext);
   const [comments, setComment] = useState([]);
   const [newComment, setNewComment] = useState([]);
+  const [rating,setRating] = useState(5);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchComments = async () => {
     try {
@@ -29,6 +31,7 @@ const Comments = ({ id }) => {
 
   const handleComment = (e) => {
     e.preventDefault();
+    setRating(e.target.value);
     createComment(newComment, dispatch).then(() => {
       fetchComments();
       commentRef.current.value = "";
@@ -57,12 +60,21 @@ const Comments = ({ id }) => {
                 name="desc"
                 onChange={(e) => handleChange(e)}
               />
-              <button
-                onClick={(e) => handleComment(e)}
-                className="mt-3 p-1 text-sm border-2 self-end cursor-pointer hover:bg-white hover:text-primary rounded-sm"
-              >
-                Send
-              </button>
+              <div className="flex justify-between mt-4">
+                <Rating
+                  name="simple-controlled"
+                  value={rating}
+                  // onChange={(e) => {
+                  //   setRating(e.target.value);
+                  // }}
+                />
+                <button
+                  onClick={(e) => handleComment(e)}
+                  className="p-1 text-sm border-2 self-end cursor-pointer hover:bg-white hover:text-primary rounded-sm"
+                >
+                  Send
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -73,6 +85,7 @@ const Comments = ({ id }) => {
               key={comment._id}
               comment={comment}
               fetchComments={fetchComments}
+              rating={rating}
             />
           ))}
       </div>
