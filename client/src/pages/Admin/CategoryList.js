@@ -20,7 +20,7 @@ const CategoryList = () => {
   const handleDelete = (id) => {
     confirmAlert({
       title: "Confirm to submit",
-      message: "Are you sure to delete this movie.",
+      message: "Are you sure to delete this category.",
       buttons: [
         {
           label: "Yes",

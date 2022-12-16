@@ -45,11 +45,15 @@ const Comment = ({ comment, fetchComments,rating }) => {
               <h2>{userComment.username}</h2>
               <p className=" opacity-70">{`${mm}/${dd}/${yyyy}`}</p>
             </div>
-            <Rating
+            {rating ? 
+            ( 
+              <Rating
                   name="simple-controlled"
                   value={rating}
                   disabled
+                  precision={0.5}
                 />
+              ) : ('')}
             <button
               onClick={(e) => handleDelete(e, comment._id)}
               className="text-base font-bold"

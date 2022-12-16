@@ -12,7 +12,7 @@ const Comments = ({ id }) => {
   const { dispatch } = useContext(CommentContext);
   const [comments, setComment] = useState([]);
   const [newComment, setNewComment] = useState([]);
-  const [rating,setRating] = useState(5);
+  const [rating,setRating] = useState(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchComments = async () => {
     try {
@@ -31,10 +31,10 @@ const Comments = ({ id }) => {
 
   const handleComment = (e) => {
     e.preventDefault();
-    setRating(e.target.value);
     createComment(newComment, dispatch).then(() => {
       fetchComments();
       commentRef.current.value = "";
+      setRating(rating)
     });
   };
   return (
@@ -63,10 +63,11 @@ const Comments = ({ id }) => {
               <div className="flex justify-between mt-4">
                 <Rating
                   name="simple-controlled"
-                  value={rating}
-                  // onChange={(e) => {
-                  //   setRating(e.target.value);
-                  // }}
+                  defaultValue={2.5} 
+                  precision={0.5}
+                  onChange={(e,newvalue) => {
+                    setRating(newvalue);
+                  }}
                 />
                 <button
                   onClick={(e) => handleComment(e)}

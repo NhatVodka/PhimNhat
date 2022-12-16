@@ -55,12 +55,15 @@ const MovieDetailPage = () => {
       <p className="text-center leading-relaxed  max-w-[600px] mx-auto mb-10">
         {desc}
       </p>
-      <div className="p-4">
-
+      <div className="p-6">
       <MovieCredit></MovieCredit>
       </div>
+      <div className="p-6">
       <MovieTrailer></MovieTrailer>
+      </div>
+      <div className="p-6">
       <MovieSimilar genre={genre} id={id}></MovieSimilar>
+      </div>
       <Comments id={id}></Comments>
     </div>
   );
