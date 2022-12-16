@@ -34,7 +34,6 @@ const Comments = ({ id }) => {
     createComment(newComment, dispatch).then(() => {
       fetchComments();
       commentRef.current.value = "";
-      setRating(rating)
     });
   };
   return (
@@ -60,22 +59,12 @@ const Comments = ({ id }) => {
                 name="desc"
                 onChange={(e) => handleChange(e)}
               />
-              <div className="flex justify-between mt-4">
-                <Rating
-                  name="simple-controlled"
-                  defaultValue={2.5} 
-                  precision={0.5}
-                  onChange={(e,newvalue) => {
-                    setRating(newvalue);
-                  }}
-                />
                 <button
                   onClick={(e) => handleComment(e)}
-                  className="p-1 text-sm border-2 self-end cursor-pointer hover:bg-white hover:text-primary rounded-sm"
+                  className="p-1 mt-4 text-sm border-2 self-end cursor-pointer hover:bg-white hover:text-primary rounded-sm"
                 >
                   Send
                 </button>
-              </div>
             </form>
           </div>
         </div>
