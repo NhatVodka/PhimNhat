@@ -14,7 +14,7 @@ const MovieSchema = new mongoose.Schema(
     vote_average: { type: Number },
     genre: { type: Array, required: true },
     country: { type: String },
-    category: { type: String, required: true },
+    category: { type: String},
     isSeries: { type: Boolean, default: false },
   },
   { timestamps: true }

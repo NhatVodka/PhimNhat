@@ -1,15 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { modalState } from "../../atoms/modalAtom";
 import Card from "../../components/Card/Card";
-import Modal from "../../components/modal/Modal";
-import MovieCard from "../../components/MovieCard/MovieCard";
-
+import { MagnifyingGlassIcon, BellIcon } from "@heroicons/react/24/solid";
 const SearchPage = () => {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  const showModal = useRecoilValue(modalState);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,6 +19,10 @@ const SearchPage = () => {
     getMovies();
     setLoading(false);
   }, []);
+  const filterMovie = movies
+  .filter((movie) =>
+    movie.title.toLowerCase().includes(query.trim().toLowerCase())
+  )
   return (
     <>
       <div className="py-10 page-container mt-20">
@@ -36,16 +35,19 @@ const SearchPage = () => {
         {loading && (
           <div className="w-10 h-10 rounded-full border-4 border-primary border-t-transparent border-t-4 mx-auto animate-spin mt-5"></div>
         )}
-      </div>
-      <div className="grid grid-cols-4 gap-10 mt-10 mx-10">
-        {!loading &&
-          movies.length > 0 &&
-          movies
-            .filter((movie) =>
-              movie.title.toLowerCase().includes(query.trim().toLowerCase())
+        {filterMovie.length > 0 ? (
+            <div className="grid grid-cols-4 gap-10 mt-10 mx-10">
+              {filterMovie
+              .map((item) => <Card key={item._id} item={item} />)} 
+            </div>
+          ): (
+            <div className="mt-10 text-2xl font-bold w-full flex items-center justify-center gap-4">
+              <MagnifyingGlassIcon className="hidden sm:inline  h-6 w-6" />
+              <p className="">No Result Found</p>
+            </div>
             )
-            .map((item) => <Card key={item._id} item={item} />)}
-      </div>
+        }
+    </div>
     </>
   );
 };

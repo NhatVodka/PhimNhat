@@ -13,7 +13,6 @@ const HomePage = () => {
   useEffect(() => {
     getCategory(dispatch);
   }, []);
-  console.log(category);
   return (
     <div
       className={`relative h-screen bg-gradient-to-blg:h-[140vh] ${

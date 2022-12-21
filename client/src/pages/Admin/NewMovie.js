@@ -33,7 +33,6 @@ const NewMovie = () => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
   };
-
   const handleSelect = (e) => {
     let value = Array.from(e.target.selectedOptions, (option) => option.value);
     setMovie({ ...movie, [e.target.name]: value });
@@ -244,7 +243,7 @@ const NewMovie = () => {
             </div>
           </form>
           {progress && progress < 100 ? (
-            <LinearProgress variant="determinate" value={progress} />
+            <LinearProgress className="mt-6" variant="determinate" value={progress} />
           ) : ('')
           }
         </div>

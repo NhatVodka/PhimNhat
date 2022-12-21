@@ -17,14 +17,21 @@ import {
 import axios from "axios";
 import { UserContext } from "../../contexts/userContext/UserContext";
 import { updateUser } from "../../contexts/userContext/apiCalls";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LinearProgress from '@mui/material/LinearProgress';
 const User = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(UserContext);
   const { userId } = useParams();
   const [user, setUser] = useState([]);
   const [profilePic, setProfilePic] = useState(user.profilePic);
-
+  const [progress, setProgress] = React.useState(0);
+  const showToastMessage = () => {
+    toast.success('Updated Successfully!!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+};
   const getUser = async () => {
     try {
       const res = await axios.get(`/users${userId ? `/${userId}` : ""}`, {
@@ -51,8 +58,11 @@ const User = () => {
   };
   const handleUpdateUser = (e, id) => {
     e.preventDefault();
+    showToastMessage();
     updateUser(id, user, dispatch);
-    navigate("/usersAdmin");
+    setTimeout(() => {
+      navigate("/usersAdmin");
+    },3000)
   };
   const handleUpload = (e) => {
     e.preventDefault();
@@ -60,22 +70,19 @@ const User = () => {
   };
   // Firebase configs
   const storage = getStorage();
-  const metadata = {
-    contentType: "image/jpeg",
-  };
 
   const upload = (items) => {
     items.forEach((item) => {
-      const fileName = new Date().getTime() + item.label + item.file;
-      const storageRef = ref(storage, `/items/${fileName}`);
-      const uploadTask = uploadBytesResumable(storageRef, item.file, metadata);
+      const fileName = new Date().getTime() + item.label + item?.file?.name;
+      const storageRef = ref(storage, "/items/" + fileName);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
       uploadTask.on(
         "state changed",
         (snapshot) => {
           const progress = Math.trunc(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          console.log("Upload is " + progress + " % done");
+          setProgress(progress)
         },
         (err) => {
           console.log(err);
@@ -214,10 +221,15 @@ const User = () => {
                   </div>
                 </div>
               </form>
+              {progress && progress < 100 ? (
+                    <LinearProgress className="mt-6" variant="determinate" value={100} />
+                  ) : ('')
+              }
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

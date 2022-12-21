@@ -91,7 +91,7 @@ const UserList = () => {
             rowsPerPageOptions={[8]}
             checkboxSelection
             disableSelectionOnClick
-            getRowId={(r) => r._id}
+            getRowId={(row) => row._id}
           />
         </div>
       </div>

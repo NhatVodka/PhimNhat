@@ -3,7 +3,9 @@ import Navbar from "../../components/admin/Navbar";
 import Sidebar from "../../components/admin/Sidebar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LinearProgress from '@mui/material/LinearProgress';
 import { useNavigate } from "react-router-dom";
 import {
   getStorage,
@@ -22,6 +24,12 @@ const Movie = () => {
   const [backdrop_path, setBackdrop_Path] = useState(movie.backdrop_path);
   const [trailer, setTrailer] = useState(movie.trailer);
   const [video, setVideo] = useState(movie.video);
+  const [progress, setProgress] = React.useState(0);
+  const showToastMessage = () => {
+    toast.success('Updated Successfully!!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+};
   const getMovies = async () => {
     try {
       const res = await axios.get(`/movies${movieId ? `/${movieId}` : ""}`, {
@@ -52,8 +60,11 @@ const Movie = () => {
   };
   const handleUpdate = (e, id) => {
     e.preventDefault();
+    showToastMessage();
     updateMovie(id, movie, dispatch);
-    navigate("/moviesAdmin");
+    setTimeout(() => {
+      navigate("/moviesAdmin");
+    },3000)
   };
 
   const handleUpload = (e) => {
@@ -67,22 +78,19 @@ const Movie = () => {
   };
   // Firebase configs
   const storage = getStorage();
-  const metadata = {
-    contentType: "image/jpeg",
-  };
 
   const upload = (items) => {
     items.forEach((item) => {
-      const fileName = new Date().getTime() + item.label + item.file;
-      const storageRef = ref(storage, `/items/${fileName}`);
-      const uploadTask = uploadBytesResumable(storageRef, item.file, metadata);
+      const fileName = new Date().getTime() + item.label + item?.file?.name;
+      const storageRef = ref(storage, "/items/" + fileName);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
       uploadTask.on(
         "state changed",
         (snapshot) => {
           const progress = Math.trunc(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          console.log("Upload is " + progress + " % done");
+          setProgress(progress)
         },
         (err) => {
           console.log(err);
@@ -223,7 +231,6 @@ const Movie = () => {
                     <label className="mb-1 text-base ">Trailer</label>
                     <input
                       type="file"
-                      placeholder={trailer}
                       className="border-b-2 outline-none w-[250px]"
                       name="trailer"
                       onChange={(e) => setTrailer(e.target.files[0])}
@@ -233,7 +240,6 @@ const Movie = () => {
                     <label className="mb-1 text-base ">Video</label>
                     <input
                       type="file"
-                      placeholder={video}
                       className="border-b-2 outline-none w-[250px]"
                       name="video"
                       onChange={(e) => setVideo(e.target.files[0])}
@@ -248,6 +254,10 @@ const Movie = () => {
                       alt=""
                     />
                   </div>
+                  {progress && progress < 100 ? (
+                    <LinearProgress className="mt-[500px]" variant="determinate" value={progress} />
+                  ) : ('')
+                  }
                   <div>
                     <button
                       className="outlinie-none p-1 cursor-pointer rounded-md bg-blue-600 text-white mr-3 "
@@ -268,6 +278,7 @@ const Movie = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

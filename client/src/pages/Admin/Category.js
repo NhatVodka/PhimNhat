@@ -6,7 +6,8 @@ import { updateCategory } from "../../contexts/categoryContext/apiCalls";
 import { CategoryContext } from "../../contexts/categoryContext/CategoryContext";
 import { getMovies } from "../../contexts/movieContext/apiCalls";
 import { MovieContext } from "../../contexts/movieContext/MovieContext";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Category = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(CategoryContext);
@@ -15,7 +16,11 @@ const Category = () => {
   const location = useLocation();
   const { state } = location;
   const [category, setCategory] = useState(state.category);
-
+  const showToastMessage = () => {
+    toast.success('Updated Successfully!!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+};
   useEffect(() => {
     getMovies(dispatchMovie);
   }, [dispatchMovie]);
@@ -39,8 +44,11 @@ const Category = () => {
   };
   const handleUpdate = (e, id) => {
     e.preventDefault();
+    showToastMessage();
     updateCategory(id, category, dispatch);
-    navigate("/categoryAdmin/");
+    setTimeout(() => {
+      navigate("/categoryAdmin/");
+    },3000)
   };
   return (
     <div className="flex bg-white ">
@@ -136,6 +144,7 @@ const Category = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
