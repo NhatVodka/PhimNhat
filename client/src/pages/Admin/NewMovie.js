@@ -25,7 +25,7 @@ const NewMovie = () => {
   const [cast, setCast] = useState(null);
   const [progress, setProgress] = React.useState(0);
   const showToastMessage = () => {
-    toast.success('Add NewMovie Successfully!!', {
+    toast.success('Added NewMovie Successfully!!', {
       position: toast.POSITION.TOP_RIGHT
     });
 };

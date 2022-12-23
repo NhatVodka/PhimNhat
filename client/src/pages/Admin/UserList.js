@@ -14,7 +14,7 @@ const UserList = () => {
   const { users, dispatch } = useContext(UserContext);
   useEffect(() => {
     getUsers(dispatch);
-  }, []);
+  }, [dispatch]);
   const handleDelete = (id) => {
     confirmAlert({
       title: "Confirm to submit",

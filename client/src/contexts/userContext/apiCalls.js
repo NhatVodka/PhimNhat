@@ -63,8 +63,7 @@ export const updateUser = async (id, user, dispatch) => {
         token: "nhat " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
     });
-
-    dispatch(updateUserSuccess(res.data));
+    dispatch(updateUserSuccess(res.data)).then(() => getUsers());
   } catch (error) {
     dispatch(updateUserFailure());
   }

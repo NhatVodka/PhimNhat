@@ -67,7 +67,7 @@ export const updateMovie = async (id, movie, dispatch) => {
         token: "nhat " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
     });
-    dispatch(updateMovieSuccess(res.data));
+    dispatch(updateMovieSuccess(res.data)).then(() => {getMovies()});
   } catch (error) {
     dispatch(updateMovieFailure());
   }

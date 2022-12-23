@@ -25,7 +25,7 @@ const User = () => {
   const { dispatch } = useContext(UserContext);
   const { userId } = useParams();
   const [user, setUser] = useState([]);
-  const [profilePic, setProfilePic] = useState(user.profilePic);
+  const [profilePic, setProfilePic] = useState(user && user.profilePic);
   const [progress, setProgress] = React.useState(0);
   const showToastMessage = () => {
     toast.success('Updated Successfully!!', {

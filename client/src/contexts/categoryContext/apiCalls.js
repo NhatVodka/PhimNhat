@@ -67,7 +67,7 @@ export const updateCategory = async (id, category, dispatch) => {
         token: "nhat " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
     });
-    dispatch(updateCategorySuccess(res.data));
+    dispatch(updateCategorySuccess(res.data)).then(() => {getCategory()});
   } catch (error) {
     dispatch(updateCategoryFailure());
   }

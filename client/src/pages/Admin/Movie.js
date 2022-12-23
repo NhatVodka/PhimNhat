@@ -20,17 +20,17 @@ const Movie = () => {
   const { dispatch } = useContext(MovieContext);
   const { movieId } = useParams();
   const [movie, setMovie] = useState([]);
-  const [poster_path, setPoster_Path] = useState(movie.poster_path);
-  const [backdrop_path, setBackdrop_Path] = useState(movie.backdrop_path);
-  const [trailer, setTrailer] = useState(movie.trailer);
-  const [video, setVideo] = useState(movie.video);
+  const [poster_path, setPoster_Path] = useState(movie && movie.poster_path);
+  const [backdrop_path, setBackdrop_Path] = useState(movie && movie.backdrop_path);
+  const [trailer, setTrailer] = useState(movie && movie.trailer);
+  const [video, setVideo] = useState(movie && movie.video);
   const [progress, setProgress] = React.useState(0);
   const showToastMessage = () => {
     toast.success('Updated Successfully!!', {
       position: toast.POSITION.TOP_RIGHT
     });
-};
-  const getMovies = async () => {
+  };
+  const getMovie = async () => {
     try {
       const res = await axios.get(`/movies${movieId ? `/${movieId}` : ""}`, {
         headers: {
@@ -43,7 +43,7 @@ const Movie = () => {
     }
   };
   useEffect(() => {
-    getMovies();
+    getMovie();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieId]);
   const { title, genre, release_date, vote_average, _id } = movie;
