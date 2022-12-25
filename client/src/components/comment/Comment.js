@@ -3,9 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteComment } from "../../contexts/commentContext/apiCalls";
 import { CommentContext } from "../../contexts/commentContext/CommentContext";
-import Rating from '@mui/material/Rating';
-const Comment = ({ comment, fetchComments,rating }) => {
-  console.log(rating)
+const Comment = ({ comment, fetchComments }) => {
   const [userComment, setUserComment] = useState({});
   const { dispatch } = useContext(CommentContext);
   // eslint-disable-next-line react-hooks/exhaustive-deps
