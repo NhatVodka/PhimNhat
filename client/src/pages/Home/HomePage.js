@@ -12,6 +12,7 @@ const HomePage = () => {
   const { category,dispatch } = useContext(CategoryContext);
   useEffect(() => {
     getCategory(dispatch);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div

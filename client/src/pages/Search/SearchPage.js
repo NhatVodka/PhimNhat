@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
-import { MagnifyingGlassIcon, BellIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 const SearchPage = () => {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
