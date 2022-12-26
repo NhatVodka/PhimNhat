@@ -24,11 +24,30 @@ const NewMovie = () => {
   const [video, setVideo] = useState(null);
   const [cast, setCast] = useState(null);
   const [progress, setProgress] = React.useState(0);
+  const [progressCast, setProgressCast] = React.useState(0);
+  const [progressTrailer, setProgressTrailer] = React.useState(0);
   const showToastMessage = () => {
     toast.success('Added NewMovie Successfully!!', {
       position: toast.POSITION.TOP_RIGHT
     });
 };
+const handleCastChange = (e) => {
+  const files = e.target.files
+  const newCast = []
+  for (let i = 0; i < files.length; i++) {
+    newCast.push(files[i])
+  }
+  setCast(newCast)
+}
+const handleTrailerChange = (e) => {
+  const files = e.target.files
+  const newTrailer = []
+  for (let i = 0; i < files.length; i++) {
+    newTrailer.push(files[i])
+  }
+  setTrailer(newTrailer)
+}
+
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
@@ -42,9 +61,7 @@ const NewMovie = () => {
     upload([
       { file: poster_path, label: "poster_path" },
       { file: backdrop_path, label: "backdrop_path" },
-      { file: trailer, label: "trailer" },
       { file: video, label: "video" },
-      { file: cast, label: "cast" },
     ]);
   };
   const handleCreate = (e) => {
@@ -82,7 +99,52 @@ const NewMovie = () => {
       );
     });
   };
-
+  const handleUploadCast = async (e) => {
+    e.preventDefault();
+    let CastUrl = [];
+    for (let i = 0; i < cast.length; i++) {
+      const image = cast[i]
+      const fileName = new Date().getTime() + image.name;
+      const storageRef = ref(storage, "/cast/" + fileName)
+      const uploadTask = uploadBytesResumable(storageRef, image)
+      uploadTask.on('state_changed', (snapshot) => {
+        const progressCast = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        setProgressCast(progressCast)
+      }, (error) => {
+        console.log(error)
+      }, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          CastUrl.push(url)
+        })
+      })
+    }
+    setMovie((prev) => {
+      return {...prev,cast: CastUrl}
+    })
+  }
+  const handleUploadTrailer = async (e) => {
+    e.preventDefault();
+    let TrailerUrl = [];
+    for (let i = 0; i < trailer.length; i++) {
+      const image = trailer[i]
+      const fileName = new Date().getTime() + image.name;
+      const storageRef = ref(storage, "/trailer/" + fileName)
+      const uploadTask = uploadBytesResumable(storageRef, image)
+      uploadTask.on('state_changed', (snapshot) => {
+        const progressTrailer = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        setProgressTrailer(progressTrailer)
+      }, (error) => {
+        console.log(error)
+      }, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          TrailerUrl.push(url)
+        })
+      })
+    }
+    setMovie((prev) => {
+      return {...prev,trailer: TrailerUrl}
+    })
+  }
   return (
     <>
     <div className="flex bg-white">
@@ -122,7 +184,7 @@ const NewMovie = () => {
               </label>
               <input
                 className=" h-[100px] p-4 border-2 border-gray-400 rounded"
-                type="email"
+                type="text"
                 placeholder="JohnSmith1@gmail.com"
                 name="desc"
                 onChange={handleChange}
@@ -199,19 +261,41 @@ const NewMovie = () => {
               <label className="mb-1 text-lg text-gray-900 ">Casts</label>
               <input
                 type="file"
+                multiple
                 className="outline-none"
                 name="cast"
-                onChange={(e) => setCast(e.target.files[0])}
+                onChange={handleCastChange}
               />
+              <button
+                  className="w-[150px] mt-2 outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
+                  onClick={handleUploadCast}
+              >
+                  Upload Cast
+              </button>
+              {progressCast && progressCast < 100 ? (
+                <LinearProgress className="mt-6" variant="determinate" value={progressCast} />
+              ) : ('')
+              }
             </div>
             <div className="flex flex-col mt-4">
               <label className="mb-1 text-lg text-gray-900 ">Trailer</label>
               <input
+                multiple
                 type="file"
                 className="outline-none w-[400px]"
                 name="trailer"
-                onChange={(e) => setTrailer(e.target.files[0])}
+                onChange={handleTrailerChange}
               />
+               <button
+                  className="w-[150px] mt-2 outline-none bg-blue-800 text-white py-2 px-3 font-semibold rounded cursor-pointer "
+                  onClick={handleUploadTrailer}
+              >
+                  Upload Trailer
+              </button>
+              {progressTrailer && progressTrailer < 100 ? (
+                <LinearProgress className="mt-6" variant="determinate" value={progressTrailer} />
+              ) : ('')
+              }
             </div>
             <div className="flex flex-col mt-3">
               <label className="mb-1 text-lg text-gray-900">Video</label>
