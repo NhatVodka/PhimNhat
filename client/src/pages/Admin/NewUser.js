@@ -152,7 +152,7 @@ const NewUser = () => {
             )}
           </form>
           {progress && progress < 100 ? (
-            <LinearProgress variant="determinate" value={progress} />
+            <LinearProgress className="mt-6" variant="determinate" value={progress} />
           ) : ('')
           }
         </div>

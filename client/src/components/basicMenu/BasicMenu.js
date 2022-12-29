@@ -27,8 +27,8 @@ const BasicMenu = () => {
   const handleClickSearch = () => {
     navigate("/search")
   }
-  const handleClickMyList = () => {
-    navigate("/")
+  const handleClickDashboard = () => {
+    navigate("/dashboard")
   }
   return (
     <div className="md:!hidden">
@@ -56,7 +56,7 @@ const BasicMenu = () => {
       <MenuItem onClick={handleClickMovies}>Movies</MenuItem>
       <MenuItem onClick={handleClickCategory}>Category</MenuItem>
       <MenuItem onClick={handleClickSearch}>Search</MenuItem>
-      <MenuItem onClick={handleClose}>My List</MenuItem>
+      <MenuItem onClick={handleClickDashboard}>Dashboard</MenuItem>
     </Menu>
   </div>
   );

@@ -1,18 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import axios from "axios";
+import React, {  useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import Banner from "../../components/banner/Banner";
 import Header from "../../components/layout/Header";
 import Modal from "../../components/modal/Modal";
 import MovieList from "../../components/MovieList/MovieList";
-import { getCategory } from "../../contexts/categoryContext/apiCalls";
-import { CategoryContext } from "../../contexts/categoryContext/CategoryContext";
 const HomePage = () => {
   const showModal = useRecoilValue(modalState);
-  const { category,dispatch } = useContext(CategoryContext);
+  const [category,setCategory] = useState([]);
+  const getCategory = async () => {
+    try {
+      const res = await axios.get(`/category`)
+      setCategory(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
-    getCategory(dispatch);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    getCategory();
   }, []);
   return (
     <div

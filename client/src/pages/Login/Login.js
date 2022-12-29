@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const { dispatch, signInWithGoogle, signInWithFacebook } =
+  const { dispatch,user,error, signInWithGoogle, signInWithFacebook } =
     useContext(AuthContext);
 
   const {
@@ -18,11 +18,14 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = () => {
-    login({ email, password }, dispatch);
-    navigate("/");
+  const onSubmit = async (e) => {
+    await login({ email, password }, dispatch);
   };
-
+  if(user){
+    setTimeout(() => {
+      navigate("/");
+    },0)
+  }
   return (
     <div className="login relative flex h-screen w-screen flex-col bg-black md:items-center md:justify-center md:bg-transparent">
       <h1 className="absolute left-4 text-[#e50914] font-bold text-5xl top-4 cursor-pointer object-contain md:left-10 md:top-6">
@@ -45,9 +48,9 @@ const Login = () => {
                 onChange: (e) => setEmail(e.target.value),
               })}
             />
-            {errors.email && (
+            {errors.email?.type === "required" && (
               <p className="p-1 text-[13px] font-light  text-orange-500">
-                Please enter a valid email.
+                Please fill your email.
               </p>
             )}
           </label>
@@ -58,12 +61,24 @@ const Login = () => {
               className="input"
               {...register("password", {
                 required: true,
+                minLength: 4,
+                maxLength: 20,
                 onChange: (e) => setPassword(e.target.value),
               })}
             />
-            {errors.password && (
+            {errors?.password?.type === "required" && (
+              <div className="p-1 text-[13px] font-light  text-orange-500">
+                Please fill your password
+              </div>
+            )}
+            {errors?.password?.type === "maxLength" && (
               <p className="p-1 text-[13px] font-light  text-orange-500">
                 Your password must contain between 4 and 60 characters.
+              </p>
+            )}
+            {error && (
+              <p className="p-1 text-[13px] font-light  text-orange-500">
+                {error}
               </p>
             )}
           </label>
